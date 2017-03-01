@@ -1,6 +1,6 @@
 package aston.vehicle;
 
-import java.util.Random;
+import aston.resources.Random;
 
 /**
  * Parent class defining the general fields for all vehicle classes.
@@ -12,14 +12,32 @@ import java.util.Random;
 
 public abstract class Vehicle {
 	
-	private Random random = new Random();
+	/**
+	 * Instance of {@link #aston.resources.Random Random} class used for predictable results
+	 */
+	private Random random = Random.getInstance();
 	
+	/**
+	 * Number of slots this vehicle takes up in a queue
+	 */
 	private double queueSize = 0.0;
+	
+	/**
+	 * Minimum size of the tank. If there is no range, this is the only size
+	 */
 	private int minTankSize;
+	
+	/**
+	 * Maximum size of the tank. If there is no range, this is not used
+	 */
 	private int maxTankSize;
+	
+	/**
+	 * Defines whether there is a range of tank size
+	 */
 	private boolean tankSizeRange;
 	
-	
+
 	/**
 	 * Constructor for vehicles with no range in tank size
 	 * @param queueSize Number of slots required by this vehicle
@@ -50,7 +68,7 @@ public abstract class Vehicle {
 	 */
 	public int getTankSize() {
 		if (tankSizeRange) {
-			return (this.minTankSize + (this.random.nextInt(this.maxTankSize - this.minTankSize)));
+			return (this.minTankSize + (this.random.get().nextInt(this.maxTankSize - this.minTankSize)));
 		} else {
 			return (this.minTankSize);
 		}
