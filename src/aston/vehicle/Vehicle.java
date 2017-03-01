@@ -64,7 +64,7 @@ public abstract class Vehicle {
 	
 	/**
 	 * Gets the tank size, minTankSize if there is no range, or a random integer value between the minimum and maximum if there is a range
-	 * @return
+	 * @return A suitably random value of tank size
 	 */
 	public int getTankSize() {
 		if (tankSizeRange) {
@@ -76,7 +76,7 @@ public abstract class Vehicle {
 	
 	/**
 	 * Gets the number of queue slots this vehicle takes up
-	 * @return 
+	 * @return Number of spaces required
 	 */
 	public double getQueueSize() {
 		return this.queueSize;

@@ -46,7 +46,7 @@ public class Random {
 	
 	/**
 	 * Gets the random object without needing to call {@link #getInstance() getInstance} first
-	 * @return
+	 * @return Java Random object consistent with the rest of the program
 	 */
 	public java.util.Random get() {
 		return getInstance().random;
