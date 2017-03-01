@@ -11,6 +11,9 @@ package aston.vehicle;
 
 public class Sedan extends Vehicle {
 
+	/**
+	 * Defines a Family Sedan according to specification
+	 */
 	public Sedan() {
 		super(1.5, 12, 18);
 	}

@@ -11,6 +11,9 @@ package aston.vehicle;
 
 public class SmallCar extends Vehicle {
 	
+	/**
+	 * Defines a Small Car according to specification
+	 */
 	public SmallCar() {
 		super(1.0, 7, 9);
 	}

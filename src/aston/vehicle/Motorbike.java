@@ -11,6 +11,9 @@ package aston.vehicle;
 
 public class Motorbike extends Vehicle {
 	
+	/**
+	 * Defines a Motorbike according to specification
+	 */
 	public Motorbike() {
 		super(0.75, 5);
 	}
