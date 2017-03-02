@@ -6,7 +6,7 @@ import aston.resources.Random;
  * Parent class defining the general fields for all vehicle classes.
  * 
  * @author Ollie
- * @version 1.1
+ * @version 1.2
  * @since 1 Mar 2017
  */
 
@@ -25,41 +25,28 @@ public abstract class Vehicle {
 	/**
 	 * Minimum size of the tank. If there is no range, this is the only size
 	 */
-	private int minTankSize;
-	
-	/**
-	 * Maximum size of the tank. If there is no range, this is not used
-	 */
-	private int maxTankSize;
-	
-	/**
-	 * Defines whether there is a range of tank size
-	 */
-	private boolean tankSizeRange;
+	private int tankSize;
 	
 
 	/**
 	 * Constructor for vehicles with no range in tank size
 	 * @param queueSize Number of slots required by this vehicle
-	 * @param minTankSize Size of the tank
+	 * @param tankSize Size of the tank
 	 */
-	public Vehicle(double queueSize, int minTankSize) {
+	public Vehicle(double queueSize, int tankSize) {
 		this.queueSize = queueSize;
-		this.minTankSize = minTankSize;
-		this.tankSizeRange = false;
+		this.tankSize = tankSize;
 	}
 	
 	/**
-	 * Constructor for vehicles with a tank size range
+	 * Constructor for vehicles with a tank size range, sets a random value between a minimum and a maximum
 	 * @param queueSize Number of slots required by this vehicle
 	 * @param minTankSize Minimum size of the tank
 	 * @param maxTankSize Maximum size of the tank
 	 */
 	public Vehicle(double queueSize, int minTankSize, int maxTankSize) {
 		this.queueSize = queueSize;
-		this.minTankSize = minTankSize;
-		this.maxTankSize = maxTankSize;
-		this.tankSizeRange = true;
+		this.tankSize = minTankSize + (this.random.get().nextInt(maxTankSize - minTankSize + 1));
 	}
 	
 	/**
@@ -67,11 +54,7 @@ public abstract class Vehicle {
 	 * @return A suitably random value of tank size
 	 */
 	public int getTankSize() {
-		if (tankSizeRange) {
-			return (this.minTankSize + (this.random.get().nextInt(this.maxTankSize - this.minTankSize)));
-		} else {
-			return (this.minTankSize);
-		}
+		return this.tankSize;
 	}
 	
 	/**
