@@ -22,11 +22,24 @@ public class Simulation {
 		
 		System.out.println("Motorbike");
 		System.out.println(motorbike.getTankSize());
-		System.out.println(motorbike.getTankSize());
-		System.out.println(motorbike.getTankSize());
 		System.out.println(motorbike.getQueueSize());
 		
 		System.out.println("Sedan");
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
+		System.out.println(sedan.getTankSize());
 		System.out.println(sedan.getTankSize());
 		System.out.println(sedan.getTankSize());
 		System.out.println(sedan.getTankSize());
@@ -36,9 +49,15 @@ public class Simulation {
 		System.out.println(smallcar.getTankSize());
 		System.out.println(smallcar.getTankSize());
 		System.out.println(smallcar.getTankSize());
+		System.out.println(smallcar.getTankSize());
+		System.out.println(smallcar.getTankSize());
+		System.out.println(smallcar.getTankSize());
 		System.out.println(smallcar.getQueueSize());
 		
 		System.out.println("Truck");
+		System.out.println(truck.getTankSize());
+		System.out.println(truck.getTankSize());
+		System.out.println(truck.getTankSize());
 		System.out.println(truck.getTankSize());
 		System.out.println(truck.getTankSize());
 		System.out.println(truck.getTankSize());
