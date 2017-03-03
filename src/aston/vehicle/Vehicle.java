@@ -27,6 +27,16 @@ public abstract class Vehicle {
 	 */
 	private int tankSize;
 	
+	/**
+	 * Current level of the tank
+	 */
+	private int tankLevel;
+	
+	/**
+	 * Whether or not the tank is full
+	 */
+	private boolean isFull;
+	
 
 	/**
 	 * Constructor for vehicles with no range in tank size
@@ -34,12 +44,11 @@ public abstract class Vehicle {
 	 * @param tankSize Size of the tank
 	 */
 	public Vehicle(double queueSize, int tankSize) {
-		this.queueSize = queueSize;
-		this.tankSize = tankSize;
+		this(queueSize, tankSize, tankSize);
 	}
 	
 	/**
-	 * Constructor for vehicles with a tank size range, sets a random value between a minimum and a maximum
+	 * Constructor for vehicles with a tank size range, sets a random value between a minimum and a maximum. Resets tankLevel and isFull
 	 * @param queueSize Number of slots required by this vehicle
 	 * @param minTankSize Minimum size of the tank
 	 * @param maxTankSize Maximum size of the tank
@@ -47,6 +56,8 @@ public abstract class Vehicle {
 	public Vehicle(double queueSize, int minTankSize, int maxTankSize) {
 		this.queueSize = queueSize;
 		this.tankSize = minTankSize + (this.random.get().nextInt(maxTankSize - minTankSize + 1));
+		this.tankLevel = 0;
+		this.isFull = false;
 	}
 	
 	/**
@@ -63,6 +74,28 @@ public abstract class Vehicle {
 	 */
 	public double getQueueSize() {
 		return this.queueSize;
+	}
+	
+	/**
+	 * Getter for isFull field
+	 * @return Whether the tank is full or not
+	 */
+	public boolean tankFull() {
+		return this.isFull;
+	}
+	
+	/**
+	 * Increases tankLevel field by 1 unit
+	 */
+	public void incrementTank() {
+		this.tankLevel += 1;
+	}
+	
+	/**
+	 * Resets tankLevel back to 0
+	 */
+	public void resetTankLevel() {
+		this.tankLevel = 0;
 	}
 	
 }
