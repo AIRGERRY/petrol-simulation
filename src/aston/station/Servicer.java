@@ -10,6 +10,9 @@ package aston.station;
  *
  */
 
+//TODO
+//Queue length method, to tell parent threads if this servicer is available for adding customers to
+
 public abstract class Servicer {
 	
 	/**
