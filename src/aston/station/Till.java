@@ -11,4 +11,11 @@ package aston.station;
 
 public class Till extends Servicer {
 
+	public Till() {
+		System.out.println("Till initialised");
+	}
+	
+	public void run() {
+		System.out.println("Till running");
+	}
 }

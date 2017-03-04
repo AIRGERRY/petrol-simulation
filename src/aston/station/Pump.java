@@ -10,5 +10,13 @@ package aston.station;
  */
 
 public class Pump extends Servicer {
+	
+	public Pump() {
+		System.out.println("Pump initialised");
+	}
+	
+	public void run() {
+		System.out.println("Pump running");
+	}
 
 }

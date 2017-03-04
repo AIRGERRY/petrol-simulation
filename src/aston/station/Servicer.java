@@ -13,10 +13,10 @@ package aston.station;
 //TODO
 //Queue length method, to tell parent threads if this servicer is available for adding customers to
 
-public abstract class Servicer {
+public abstract class Servicer implements Runnable {
 	
 	/**
-	 * Holds the queue object containing the list and order of customer at the servicer
+	 * Holds the {@code queue} object containing the list and order of customer at the servicer
 	 */
 	protected Queue queue;
 	
@@ -34,17 +34,22 @@ public abstract class Servicer {
 	}
 	
 	/**
-	 * Getter for revenue
-	 * @return {double} Revenue taken by this servicer
+	 * Getter for {@code revenue}
+	 * @return {@code double} Revenue taken by this servicer
 	 */
 	public double getRevenue() {
 		return this.revenue;
 	}
 	
 	/**
-	 * Resets revenue back to 0
+	 * Resets {@code revenue} back to 0
 	 */
 	public void resetRevenue() {
 		this.revenue = 0;
 	}
+	
+	/**
+	 * Forces child classes to not compile until the run method is defined
+	 */
+	public abstract void run();
 }
