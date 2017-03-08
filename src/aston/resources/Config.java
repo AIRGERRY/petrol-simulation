@@ -1,4 +1,4 @@
-package aston.simulation;
+package aston.resources;
 
 /**
  * Global project constants
@@ -21,6 +21,12 @@ public class Config {
 	public static final int SEDAN_TANK_HIGH = 18;
 	public static final int TRUCK_TANK_LOW = 30;
 	public static final int TRUCK_TANK_HIGH = 40;
+	
+	//Queue size
+	public static final double MOTORBIKE_SIZE = 0.75;
+	public static final double SMALLCAR_SIZE = 1;
+	public static final double SEDAN_SIZE = 1.5;
+	public static final double TRUCK_SIZE = 2;
 	
 	//Happy time
 	public static final int MOTORBIKE_HAPPY_TIME = 0;
