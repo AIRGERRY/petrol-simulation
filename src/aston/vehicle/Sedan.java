@@ -1,5 +1,7 @@
 package aston.vehicle;
 
+import aston.resources.Config;
+
 /**
  * Family sedan class
  *
@@ -16,9 +18,9 @@ public class Sedan extends Vehicle {
 	 */
 	public Sedan() {
 		super();
-		this.tankSize = 12 + (this.random.get().nextInt(18 - 12 + 1));
-		this.queueSize = 1.5;
-		this.happyTime = 60;
+		this.tankSize = Config.SEDAN_TANK_LOW + (this.random.get().nextInt(Config.SEDAN_TANK_HIGH - Config.SEDAN_TANK_LOW + 1));
+		this.queueSize = Config.SEDAN_SIZE;
+		this.happyTime = Config.SEDAN_HAPPY_TIME;
 	}
 	
 }

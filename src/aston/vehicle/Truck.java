@@ -1,5 +1,7 @@
 package aston.vehicle;
 
+import aston.resources.Config;
+
 /**
  * 
  * 
@@ -16,8 +18,8 @@ public class Truck extends Vehicle {
 	 */
 	public Truck() {
 		super();
-		this.tankSize = 30 + (this.random.get().nextInt(40 - 30 + 1));
-		this.queueSize = 2.0;
-		this.happyTime = 48;
+		this.tankSize = Config.TRUCK_TANK_LOW + (this.random.get().nextInt(Config.TRUCK_TANK_HIGH - Config.TRUCK_TANK_LOW + 1));
+		this.queueSize = Config.TRUCK_SIZE;
+		this.happyTime = Config.TRUCK_HAPPY_TIME;
 	}
 }

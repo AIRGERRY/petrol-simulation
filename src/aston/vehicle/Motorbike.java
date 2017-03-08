@@ -1,5 +1,7 @@
 package aston.vehicle;
 
+import aston.resources.Config;
+
 /**
  * Motorbike class
  * 
@@ -16,9 +18,9 @@ public class Motorbike extends Vehicle {
 	 */
 	public Motorbike() {
 		super();
-		this.tankSize = 5;
-		this.queueSize = 0.75;
-		this.happyTime = 0;
+		this.tankSize = Config.MOTORBIKE_TANK;
+		this.queueSize = Config.MOTORBIKE_SIZE;
+		this.happyTime = Config.MOTORBIKE_HAPPY_TIME;
 	}
 	
 }
