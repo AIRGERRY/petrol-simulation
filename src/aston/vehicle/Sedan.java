@@ -4,7 +4,7 @@ package aston.vehicle;
  * Family sedan class
  *
  * @author Ollie
- * @version 1.0
+ * @version 1.1
  * @since 1 Mar 2017
  *
  */
