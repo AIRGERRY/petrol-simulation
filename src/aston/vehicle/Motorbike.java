@@ -15,7 +15,10 @@ public class Motorbike extends Vehicle {
 	 * Defines a Motorbike according to specification
 	 */
 	public Motorbike() {
-		super(0.75, 5);
+		super();
+		this.tankSize = 5;
+		this.queueSize = 0.75;
+		this.happyTime = 0;
 	}
 	
 }

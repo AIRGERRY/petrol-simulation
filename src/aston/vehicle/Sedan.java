@@ -15,7 +15,10 @@ public class Sedan extends Vehicle {
 	 * Defines a Family Sedan according to specification
 	 */
 	public Sedan() {
-		super(1.5, 12, 18);
+		super();
+		this.tankSize = 12 + (this.random.get().nextInt(18 - 12 + 1));
+		this.queueSize = 1.5;
+		this.happyTime = 60;
 	}
 	
 }
