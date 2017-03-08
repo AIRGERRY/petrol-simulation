@@ -1,7 +1,7 @@
 package aston.view.gui;
 
 /**
- * 
+ * Graphical UI
  * 
  * @author Ollie
  * @version 1.0

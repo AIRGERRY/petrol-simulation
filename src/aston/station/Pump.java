@@ -1,7 +1,7 @@
 package aston.station;
 
 /**
- * 
+ * Pump class for vehicles
  * 
  * @author Ollie
  * @version 1.0

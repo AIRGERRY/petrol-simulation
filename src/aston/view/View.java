@@ -1,7 +1,7 @@
 package aston.view;
 
 /**
- * 
+ * View Parent class, defining class constants for children
  * 
  * @author Ollie
  * @version 1.0

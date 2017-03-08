@@ -3,7 +3,7 @@ package aston.station;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
- * 
+ * Queue for servicers
  * 
  * @author Ollie
  * @version 1.0

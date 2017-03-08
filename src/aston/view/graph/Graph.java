@@ -1,7 +1,7 @@
 package aston.view.graph;
 
 /**
- * 
+ * Graph UI
  * 
  * @author Ollie
  * @version 1.0
