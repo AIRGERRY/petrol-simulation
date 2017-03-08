@@ -1,7 +1,9 @@
 package aston.station;
 
+import aston.resources.Config;
+
 /**
- * 
+ * Main Station handler class
  * 
  * @author Ollie
  * @version 1.0
@@ -15,13 +17,12 @@ public class Station {
 	private Pump[] pumps = new Pump[4];
 	
 	public Station() {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Config.TILL_COUNT; i++) {
 			tills[i] = new Till();
-			pumps[i] = new Pump();
-		}
-		
-		for (int i = 0; i < 4; i++) {
 			new Thread(tills[i]).start();
+		}
+		for (int i = 0; i < Config.PUMP_COUNT; i++) {
+			pumps[i] = new Pump();
 			new Thread(pumps[i]).start();
 		}
 	}
