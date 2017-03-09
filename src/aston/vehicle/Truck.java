@@ -1,6 +1,6 @@
 package aston.vehicle;
 
-import aston.resources.Config;
+import aston.resources.*;
 
 /**
  * 
