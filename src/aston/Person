@@ -1,0 +1,57 @@
+/**
+ * Person class
+ * 
+ * @author Gerard
+ * @version 1.0
+ * @since 9 Mar 2017
+ *
+ */
+
+public class Person
+{
+    /**
+     * Instantiation of the Customer object.
+     */
+    private Customer person;
+    
+    /**
+     * instantiation of the Vehicle object.
+     */
+    private Vehicle vehicle;
+    
+    /**
+     * Amount of time spent waiting at the queue.
+     */
+    private int spentWaiting;
+    
+    
+  /**
+  * Constructor for Person class. Initialises class variables.
+  */
+  public Person(Customer customer, int time)
+  {
+      this.person = customer;
+      
+      this.spentWaiting = time;
+  }
+  
+  
+  /**
+  * Getter for person field
+  * @return the Customer object.
+  */
+  public Customer getCustomer() 
+  {
+    return person;
+  }
+  
+  /**
+  * Gets the number of time spent waiting at the queue.
+  * @return The value of the amount spent waiting.
+  */
+  public int timeSpent() 
+  {
+      return this.spentWaiting;
+  }
+  
+}
