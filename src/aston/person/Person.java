@@ -1,8 +1,12 @@
+package aston.person;
+
+import aston.vehicle.Vehicle;
+
 /**
  * Person class
  * 
- * @author Gerard
- * @version 1.0
+ * @author Gerard, Ollie
+ * @version 1.1
  * @since 9 Mar 2017
  *
  */
@@ -10,12 +14,12 @@
 public class Person
 {
     /**
-     * Instantiation of the Customer object.
+     * Instantiation of the {@code Customer} object.
      */
     private Customer person;
     
     /**
-     * instantiation of the Vehicle object.
+     * instantiation of the {@code Vehicle} object.
      */
     private Vehicle vehicle;
     
@@ -26,7 +30,7 @@ public class Person
     
     
   /**
-  * Constructor for Person class. Initialises class variables.
+  * Constructor for {@code Person} class. Initialises class variables.
   */
   public Person(Customer customer, int time)
   {
@@ -37,7 +41,7 @@ public class Person
   
   
   /**
-  * Getter for person field
+  * Getter for {@code person} field
   * @return the Customer object.
   */
   public Customer getCustomer() 

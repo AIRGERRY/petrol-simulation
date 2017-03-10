@@ -1,8 +1,10 @@
+package aston.person;
+
 /**
  * Customer class
  * 
  * @author Gerard
- * @version 1.0
+ * @version 1.1
  * @since 9 Mar 2017
  *
  */

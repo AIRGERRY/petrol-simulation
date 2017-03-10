@@ -59,8 +59,8 @@ public abstract class Vehicle {
 	}
 	
 	/**
-	 * Gets the tank size, minTankSize if there is no range, or a random integer value between the minimum and maximum if there is a range
-	 * @return A suitably random value of tank size
+	 * Gets the tank size
+	 * @return The tank size
 	 */
 	public int getTankSize() {
 		return this.tankSize;
@@ -75,7 +75,7 @@ public abstract class Vehicle {
 	}
 	
 	/**
-	 * Getter for isFull field
+	 * Getter for {@code isFull}
 	 * @return Whether the tank is full or not
 	 */
 	public boolean tankFull() {
@@ -83,14 +83,14 @@ public abstract class Vehicle {
 	}
 	
 	/**
-	 * Increases tankLevel field by 1 unit
+	 * Increases {@code tankLevel} field by 1 unit
 	 */
 	public void incrementTank() {
 		this.tankLevel += 1;
 	}
 	
 	/**
-	 * Resets tankLevel back to 0
+	 * Resets {@code tankLevel} back to 0
 	 */
 	public void resetTankLevel() {
 		this.tankLevel = 0;
