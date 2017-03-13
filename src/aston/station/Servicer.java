@@ -30,7 +30,7 @@ public abstract class Servicer implements Runnable {
 	 */
 	public Servicer() {
 		this.queue = new Queue();
-		this.revenue = 0.0;
+		this.revenue = 0.0;		
 	}
 	
 	/**

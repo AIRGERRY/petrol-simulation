@@ -2,6 +2,8 @@ package aston.station;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
+import aston.person.Customer;
+
 /**
  * Queue for servicers
  * 
@@ -12,6 +14,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 
 public class Queue {
+
 	//Needs a get method for classes to call
 	//Needs a put method for classes to call
 	

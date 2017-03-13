@@ -1,11 +1,13 @@
 package aston.station;
 
+import aston.person.Customer;
 import aston.resources.Config;
+import aston.vehicle.Vehicle;
 
 /**
  * Main Station handler class
  * 
- * @author Ollie
+ * @author Ollie, Mosope
  * @version 1.0
  * @since 4 Mar 2017
  *
@@ -15,6 +17,8 @@ public class Station {
 	
 	private Till[] tills = new Till[Config.TILL_COUNT];
 	private Pump[] pumps = new Pump[Config.PUMP_COUNT];
+	private double moneyEarned = 0;
+	private double moneyLost = 0;
 	
 	public Station() {
 		for (int i = 0; i < Config.TILL_COUNT; i++) {
@@ -27,7 +31,91 @@ public class Station {
 		}
 	}
 	
-	public Servicer getShortestQueue(boolean pump) {
-		return null;
+	/**
+	 * Adds a vehicle to a Pump
+	 * @param vehicle the vehicle to add to a pump
+	 */
+	public void joinPump(Vehicle vehicle)
+	{
+		// getShortestQueue for pump and add vehicle
 	}
+	
+	/**
+	 * Adds a happy customer to the Shopingarea 
+	 * @param customer the customer to add to the shopping area
+	 */
+	public void joinShoppingArea(Customer customer)
+	{
+		//join shoppingArea for sometime
+	}
+	
+	/**
+	 * Adds a customer to a Till
+	 * @param customer the customer to add to a till
+	 */
+	public void joinTill(Customer customer)
+	{
+		//getShortestQueue for till and add customer
+	}
+	
+	/**
+	 * Gets the shortest Pump/Till
+	 * @param pump whether it checks Pump or Till. <code>true</code> will check shortest Pump queue, <code>false</code> will check the shortest Till queue
+	 * @return {@link Servicer} The shortest Pump/Til
+	 */
+	public Servicer getShortestQueue(boolean pump) {
+		if (pump)
+		{
+			Pump shortestPump = pumps[0];
+			for (int i = 0; i<pumps.length; i++)
+			{
+				//if pumps[i].getCapacity() < shortestPump
+				// shortestpump = pumps[i]
+			}
+			return shortestPump;
+		}
+		Till shortestTill = tills[0];
+		for (int i = 0; i<pumps.length; i++)
+		{
+			//if pumps[i].getCapacity() < shortestPump
+			// shortestpump = pumps[i]
+		}
+		return shortestTill;
+	}
+	
+	/**
+	 * Getter for money earnerd
+	 * @return moneyEarned the money earned by the station
+	 */
+	public double getMoneyEarned() {
+		return moneyEarned;
+	}
+	
+	
+	/**
+	 * Getter for money lost
+	 * @return moneyLost the money lost due to missed sales
+	 */
+	public double getMoneyLost() {
+		return moneyLost;
+	}
+	
+	/**
+	 * Adds money to the amount of money earned by the station
+	 * @param money the amount of money for made sales
+	 */
+	public void addToMoneyEarned(double money)
+	{
+		moneyEarned =+ money;
+	}
+	
+	/**
+	 * Adds money to the amount of money lost by the station
+	 * @param money the amount of money lost due to missed sales
+	 */
+	public void addToMoneyLost(double money)
+	{
+		moneyLost =+ money;
+	}
+
 }
