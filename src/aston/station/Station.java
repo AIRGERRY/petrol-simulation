@@ -13,8 +13,8 @@ import aston.resources.Config;
 
 public class Station {
 	
-	private Till[] tills = new Till[4];
-	private Pump[] pumps = new Pump[4];
+	private Till[] tills = new Till[Config.TILL_COUNT];
+	private Pump[] pumps = new Pump[Config.PUMP_COUNT];
 	
 	public Station() {
 		for (int i = 0; i < Config.TILL_COUNT; i++) {
@@ -25,5 +25,9 @@ public class Station {
 			pumps[i] = new Pump();
 			new Thread(pumps[i]).start();
 		}
+	}
+	
+	public Servicer getShortestQueue(boolean pump) {
+		return null;
 	}
 }
