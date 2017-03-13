@@ -67,4 +67,7 @@ public class Config {
 	
 	//Allow trucks
 	public static final boolean ALLOW_TRUCKS = true;
+	
+	//Random generator seed
+	public static final int SEED = 420;
 }

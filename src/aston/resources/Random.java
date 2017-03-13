@@ -12,11 +12,6 @@ package aston.resources;
 public class Random {
 	
 	/**
-	 * Configurable seed to give predictably random results through different runs of the system
-	 */
-	private static int SEED = 420;
-	
-	/**
 	 * Instance of the Java Random class used to generate values
 	 */
 	private java.util.Random random;
@@ -30,7 +25,7 @@ public class Random {
 	 * Private constructor, should only be accessed from {@link #getInsance() getInstance}
 	 */
 	private Random() {
-		random = new java.util.Random(SEED);
+		random = new java.util.Random(Config.SEED);
 	}
 	
 	/**
