@@ -10,5 +10,5 @@ package aston.view;
  */
 
 public class View {
-	//Sup brandon;
+	
 }
