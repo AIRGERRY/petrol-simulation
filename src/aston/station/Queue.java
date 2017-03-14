@@ -4,6 +4,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import aston.person.Customer;
 import aston.vehicle.Vehicle;
+import aston.resources.Config;
 
 /**
  * Queue for servicers
@@ -37,8 +38,10 @@ public class Queue {
 
 	public void put(Vehicle vehicle) {
 		try {
-			this.queueLevel += vehicle.getQueueSize();
-			this.queue.put(vehicle);
+			if ((this.queueLevel + vehicle.getQueueSize()) < Config.QUEUE_CAPACITY) {
+				this.queueLevel += vehicle.getQueueSize();
+				this.queue.put(vehicle);
+			}
 		} catch (InterruptedException ex) {
 			System.out.println("Problem adding object to queue - " + vehicle.toString());
 		}

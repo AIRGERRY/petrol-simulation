@@ -64,12 +64,12 @@ public class Config {
 	//Servicer details
 	public static final int PUMP_COUNT = 4;
 	public static final int TILL_COUNT = 4;
-	public static final double PUMP_CAPACITY = 3.0;
-	public static final double TILL_CAPACITY = 3.0;
+	public static final double QUEUE_CAPACITY = 3.0;
 	
 	//Allow trucks
 	public static final boolean ALLOW_TRUCKS = true;
 	
 	//Random generator seed
 	public static final int SEED = 420;
+
 }
