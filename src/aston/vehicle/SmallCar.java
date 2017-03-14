@@ -22,5 +22,9 @@ public class SmallCar extends Vehicle {
 		this.queueSize = Config.SMALLCAR_SIZE;
 		this.happyTime = Config.SMALLCAR_HAPPY_TIME;
 	}
+	
+	public String toString() {
+		return "Small car with a " + this.tankSize + " gallon tank";
+	}
 
 }

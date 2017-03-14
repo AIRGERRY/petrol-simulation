@@ -23,4 +23,8 @@ public class Motorbike extends Vehicle {
 		this.happyTime = Config.MOTORBIKE_HAPPY_TIME;
 	}
 	
+	public String toString() {
+		return "Motorbike with a " + this.tankSize + " gallon tank";
+	}
+	
 }

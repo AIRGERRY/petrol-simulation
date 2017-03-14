@@ -22,4 +22,9 @@ public class Truck extends Vehicle {
 		this.queueSize = Config.TRUCK_SIZE;
 		this.happyTime = Config.TRUCK_HAPPY_TIME;
 	}
+	
+	public String toString() {
+		return "Truck with a " + this.tankSize + " gallon tank";
+	}
+	
 }

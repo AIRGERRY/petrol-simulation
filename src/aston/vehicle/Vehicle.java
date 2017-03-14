@@ -96,4 +96,6 @@ public abstract class Vehicle {
 		this.tankLevel = 0;
 	}
 	
+	public abstract String toString();
+	
 }

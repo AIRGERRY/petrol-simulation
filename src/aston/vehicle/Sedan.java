@@ -23,4 +23,8 @@ public class Sedan extends Vehicle {
 		this.happyTime = Config.SEDAN_HAPPY_TIME;
 	}
 	
+	public String toString() {
+		return "Family Sedan with a " + this.tankSize + " gallon tank";
+	}
+	
 }
