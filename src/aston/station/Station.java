@@ -1,7 +1,15 @@
 package aston.station;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
+
 import aston.person.Customer;
+import aston.person.Person;
 import aston.resources.Config;
+import aston.resources.Random;
+import aston.vehicle.Motorbike;
+import aston.vehicle.Sedan;
+import aston.vehicle.SmallCar;
+import aston.vehicle.Truck;
 import aston.vehicle.Vehicle;
 
 /**
@@ -29,6 +37,52 @@ public class Station {
 			pumps[i] = new Pump();
 			new Thread(pumps[i]).start();
 		}
+	}
+	
+	/**
+	 * Creates a new {@code Person} object and adds it to a {@code Pump} if there's space, then adds to ShoppingArea when happy or simply to the {@code Till} when done
+	 */
+	public void newCustomerArrive()
+	{
+		Person person = createPerson();
+		if(person != null){
+		//if isSpace(), joinPump()
+		//if happy(), joinShoppingArea()
+		//joinTill()
+		}
+	}
+	
+	/**
+	 * Helper method for creating a new {@link Person} at random
+	 * @return a {@code Person} object
+	 */
+	public Person createPerson()
+	{
+		if(Random.get().nextDouble() <= Config.SMALLCAR_PROBABILITY ) {
+			Vehicle vehicle = new SmallCar();
+			Customer customer = new Customer(true);
+			Person person = new Person(customer,vehicle, 0);
+			return person;
+		}
+		else if (Random.get().nextDouble() <= Config.SEDAN_PROBABILITY ){
+			Vehicle vehicle = new Sedan();
+			Customer customer = new Customer(true);
+			Person person = new Person(customer,vehicle, 0);
+			return person;
+		}
+		else if (Random.get().nextDouble() <= Config.MOTORBIKE_PROBABILITY){
+			Vehicle vehicle = new Motorbike();
+			Customer customer = new Customer(true);
+			Person person = new Person(customer,vehicle, 0);
+			return person;
+		}
+		else if (Config.ALLOW_TRUCKS && Random.get().nextDouble() <= Config.TRUCK_PROBABILITY ){
+			Vehicle vehicle = new Truck();
+			Customer customer = new Customer(true);
+			Person person = new Person(customer,vehicle, 0);
+			return person;
+		}
+		return null;
 	}
 	
 	/**
@@ -72,12 +126,12 @@ public class Station {
 				//if pumps[i].getCapacity() < shortestPump
 				// shortestpump = pumps[i]
 			}
-			return shortestPump;
+			return shortestPump;			
 		}
 		Till shortestTill = tills[0];
-		for (int i = 0; i<pumps.length; i++)
+		for (int i = 0; i<tills.length; i++)
 		{
-			//if pumps[i].getCapacity() < shortestPump
+			//if tills[i].getCapacity() < shortestTill
 			// shortestpump = pumps[i]
 		}
 		return shortestTill;
