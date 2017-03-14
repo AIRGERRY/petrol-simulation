@@ -40,7 +40,7 @@ public class View {
 	}
 	
 	public void amountOfFuel(){
-		if (fuelCount > 0){
+		if (fuelCount > 6){
 		System.out.println("Vechicle topped up " + fuelCount + "gallons");
 	} else {
 		System.out.println("No fuel was used");
