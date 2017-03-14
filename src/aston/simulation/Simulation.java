@@ -16,7 +16,7 @@ import aston.station.*;
 public class Simulation {
 	
 	public static void main(String args[]) {
-		Station station = new Station();
+		Station station = Station.getInstance();
 		System.out.println("Simulator initialised");
 	}
 }

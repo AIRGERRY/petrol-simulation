@@ -1,7 +1,5 @@
 package aston.station;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
-
 import aston.person.Customer;
 import aston.person.Person;
 import aston.resources.Config;
@@ -28,7 +26,15 @@ public class Station {
 	private double moneyEarned = 0;
 	private double moneyLost = 0;
 	
-	public Station() {
+	/**
+	 * Singleton instance of Station class
+	 */
+	private static Station instance = null;
+	
+	/**
+	 * Should only be called from getInstance method
+	 */
+	private Station() {
 		for (int i = 0; i < Config.TILL_COUNT; i++) {
 			tills[i] = new Till();
 			new Thread(tills[i]).start();
@@ -37,6 +43,13 @@ public class Station {
 			pumps[i] = new Pump();
 			new Thread(pumps[i]).start();
 		}
+	}
+	
+	public static Station getInstance() {
+		if (instance == null) {
+			instance = new Station();
+		}
+		return instance;
 	}
 	
 	/**
@@ -138,7 +151,7 @@ public class Station {
 	}
 	
 	/**
-	 * Getter for money earnerd
+	 * Getter for money earned
 	 * @return moneyEarned the money earned by the station
 	 */
 	public double getMoneyEarned() {
