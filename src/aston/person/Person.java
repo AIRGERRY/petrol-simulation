@@ -60,5 +60,14 @@ public class Person {
 	public int timeSpent() {
 		return this.spentWaiting;
 	}
+	
+	
+	public String toString() {
+		boolean status = person.isHappy();
+		if (status == false){
+			return "Unhappy Customer driving a " + vehicle.toString();
+		}
+		return "happy Customer driving a " + vehicle.toString() ;
+	}
 
 }

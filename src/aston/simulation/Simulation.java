@@ -42,5 +42,10 @@ public class Simulation {
 		System.out.println(new Truck().toString());
 		System.out.println(new Truck().toString());
 		
+		for (int i=0; i <70; i++)
+		{
+			station.newCustomerArrive();
+		}
+		
 	}
 }

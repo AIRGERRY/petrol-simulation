@@ -20,18 +20,18 @@ import aston.vehicle.Vehicle;
  */
 
 public class Station {
-	
+
 	private Till[] tills = new Till[Config.TILL_COUNT];
 	private Pump[] pumps = new Pump[Config.PUMP_COUNT];
 	private ShoppingArea shoppingArea = new ShoppingArea();
 	private double moneyEarned = 0;
 	private double moneyLost = 0;
-	
+
 	/**
 	 * Singleton instance of Station class
 	 */
 	private static Station instance = null;
-	
+
 	/**
 	 * Should only be called from getInstance method
 	 */
@@ -45,14 +45,14 @@ public class Station {
 			new Thread(pumps[i]).start();
 		}
 	}
-	
+
 	public static Station getInstance() {
 		if (instance == null) {
 			instance = new Station();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Creates a new {@code Person} object and adds it to a {@code Pump} if there's space, then adds to ShoppingArea when happy or simply to the {@code Till} when done
 	 */
@@ -60,45 +60,88 @@ public class Station {
 	{
 		Person person = createPerson();
 		if(person != null){
-		//if isSpace(), joinPump()
-		//if happy(), joinShoppingArea()
-		//joinTill()
+			System.out.println("Created " + person.toString());
+			//if isSpace(), joinPump()
+			//if happy(), joinShoppingArea()
+			//joinTill()
 		}
 	}
-	
+
 	/**
 	 * Helper method for creating a new {@link Person} at random
 	 * @return a {@code Person} object
 	 */
 	public Person createPerson()
 	{
-		if(Random.get().nextDouble() <= Config.SMALLCAR_PROBABILITY ) {
-			Vehicle vehicle = new SmallCar();
-			Customer customer = new Customer(true);
-			Person person = new Person(customer,vehicle, 0);
-			return person;
-		}
-		else if (Random.get().nextDouble() <= Config.SEDAN_PROBABILITY ){
-			Vehicle vehicle = new Sedan();
-			Customer customer = new Customer(true);
-			Person person = new Person(customer,vehicle, 0);
-			return person;
-		}
-		else if (Random.get().nextDouble() <= Config.MOTORBIKE_PROBABILITY){
-			Vehicle vehicle = new Motorbike();
-			Customer customer = new Customer(true);
-			Person person = new Person(customer,vehicle, 0);
-			return person;
-		}
-		else if (Config.ALLOW_TRUCKS && Random.get().nextDouble() <= Config.TRUCK_PROBABILITY ){
+		double r = Random.get().nextDouble();
+		Person person = null;
+
+		if (Config.ALLOW_TRUCKS && r <= Config.TRUCK_PROBABILITY ){
 			Vehicle vehicle = new Truck();
 			Customer customer = new Customer(true);
-			Person person = new Person(customer,vehicle, 0);
+			 person = new Person(customer,vehicle, 0);
+			 return person;
+		}
+		if(Config.SMALLCAR_PROBABILITY == Config.MOTORBIKE_PROBABILITY
+				&& Config.MOTORBIKE_PROBABILITY == Config.SEDAN_PROBABILITY
+				&& Config.SEDAN_PROBABILITY == Config.SMALLCAR_PROBABILITY)
+		{
+			int r2 = Random.get().nextInt(4);  
+			if(r2 ==0 ) {
+				Vehicle vehicle = new SmallCar();
+				Customer customer = new Customer(true);
+				person = new Person(customer,vehicle, 0);
+			}
+			else if (r2 == 1){
+				Vehicle vehicle = new Sedan();
+				Customer customer = new Customer(true);
+				 person = new Person(customer,vehicle, 0);
+			}
+			else if (r2 == 3){
+				Vehicle vehicle = new Motorbike();
+				Customer customer = new Customer(true);
+				 person = new Person(customer,vehicle, 0);
+			}
 			return person;
 		}
-		return null;
+		
+		else{
+			
+			person = null;
+			if(r>0.05)
+			{
+				r = r /10;
+				while(r > 0.05)
+				{
+					r=r-0.01;
+				}
+				
+			}
+			if (Config.ALLOW_TRUCKS && r <= Config.TRUCK_PROBABILITY ){
+				Vehicle vehicle = new Truck();
+				Customer customer = new Customer(true);
+				 person = new Person(customer,vehicle, 0);
+			}
+			 if(r <= Config.SMALLCAR_PROBABILITY ) {
+				Vehicle vehicle = new SmallCar();
+				Customer customer = new Customer(true);
+				 person = new Person(customer,vehicle, 0);
+			}
+			 if (r <= Config.SEDAN_PROBABILITY){
+				Vehicle vehicle = new Sedan();
+				Customer customer = new Customer(true);
+				person = new Person(customer,vehicle, 0);
+			}
+			  if (r <= Config.MOTORBIKE_PROBABILITY){
+				Vehicle vehicle = new Motorbike();
+				Customer customer = new Customer(true);
+				 person = new Person(customer,vehicle, 0);
+			}
+			return person;
+
+		}
 	}
-	
+
 	/**
 	 * Adds a vehicle to a Pump
 	 * @param vehicle the vehicle to add to a pump
@@ -107,16 +150,16 @@ public class Station {
 	{
 		// getShortestQueue for pump and add vehicle
 	}
-	
+
 	/**
 	 * Adds a happy customer to the Shopingarea 
 	 * @param customer the customer to add to the shopping area
 	 */
 	public void joinShoppingArea(Customer customer)
 	{
-		
+
 	}
-	
+
 	/**
 	 * Adds a customer to a Till
 	 * @param customer the customer to add to a till
@@ -125,7 +168,7 @@ public class Station {
 	{
 		//getShortestQueue for till and add customer
 	}
-	
+
 	/**
 	 * Gets the shortest Pump/Till
 	 * @param pump whether it checks Pump or Till. <code>true</code> will check shortest Pump queue, <code>false</code> will check the shortest Till queue
@@ -150,7 +193,7 @@ public class Station {
 		}
 		return shortestTill;
 	}
-	
+
 	/**
 	 * Getter for money earned
 	 * @return moneyEarned the money earned by the station
@@ -158,8 +201,8 @@ public class Station {
 	public double getMoneyEarned() {
 		return moneyEarned;
 	}
-	
-	
+
+
 	/**
 	 * Getter for money lost
 	 * @return moneyLost the money lost due to missed sales
@@ -167,7 +210,7 @@ public class Station {
 	public double getMoneyLost() {
 		return moneyLost;
 	}
-	
+
 	/**
 	 * Adds money to the amount of money earned by the station
 	 * @param money the amount of money for made sales
@@ -176,7 +219,7 @@ public class Station {
 	{
 		moneyEarned =+ money;
 	}
-	
+
 	/**
 	 * Adds money to the amount of money lost by the station
 	 * @param money the amount of money lost due to missed sales
