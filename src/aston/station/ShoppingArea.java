@@ -8,7 +8,7 @@ import java.util.Iterator;
  * ShoppingArea class for happy customers
  * 
  * @author Ollie
- * @version 1.0
+ * @version 1.1
  * @since 14 Mar 2017
  *
  */
