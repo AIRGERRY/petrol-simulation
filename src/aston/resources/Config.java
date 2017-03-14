@@ -61,9 +61,11 @@ public class Config {
 	public static final double SEDAN_PROBABILITY = 0.05;
 	public static double TRUCK_PROBABILITY = 0.02;
 	
-	//Servicer count
+	//Servicer details
 	public static final int PUMP_COUNT = 4;
 	public static final int TILL_COUNT = 4;
+	public static final double PUMP_CAPACITY = 3.0;
+	public static final double TILL_CAPACITY = 3.0;
 	
 	//Allow trucks
 	public static final boolean ALLOW_TRUCKS = true;
