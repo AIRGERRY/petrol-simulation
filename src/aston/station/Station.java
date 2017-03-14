@@ -23,6 +23,7 @@ public class Station {
 	
 	private Till[] tills = new Till[Config.TILL_COUNT];
 	private Pump[] pumps = new Pump[Config.PUMP_COUNT];
+	private ShoppingArea shoppingArea = new ShoppingArea();
 	private double moneyEarned = 0;
 	private double moneyLost = 0;
 	
@@ -113,7 +114,7 @@ public class Station {
 	 */
 	public void joinShoppingArea(Customer customer)
 	{
-		//join shoppingArea for sometime
+		
 	}
 	
 	/**
