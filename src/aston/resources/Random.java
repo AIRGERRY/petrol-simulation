@@ -3,7 +3,7 @@ package aston.resources;
 /**
  * Singleton random class for whole program
  * 
- * @author Ollie
+ * @author Ollie, Mosope
  * @version 1.0
  * @since 1 Mar 2017
  *
@@ -43,7 +43,7 @@ public class Random {
 	 * Gets the random object without needing to call {@link #getInstance() getInstance} first
 	 * @return Java Random object consistent with the rest of the program
 	 */
-	public java.util.Random get() {
+	public static java.util.Random get() {
 		return getInstance().random;
 	}
 }

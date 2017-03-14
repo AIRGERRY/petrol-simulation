@@ -5,7 +5,7 @@ import aston.vehicle.Vehicle;
 /**
  * Person class
  * 
- * @author Gerard, Ollie
+ * @author Gerard, Ollie, Mosope
  * @version 1.1
  * @since 9 Mar 2017
  *
@@ -30,12 +30,21 @@ public class Person {
 	/**
 	 * Constructor for {@code Person} class. Initialises class variables.
 	 */
-	public Person(Customer customer, int time) {
+	public Person(Customer customer, Vehicle vehicle, int time) {
 		this.person = customer;
-
+		this.vehicle = vehicle;
 		this.spentWaiting = time;
 	}
 
+	
+	/**
+	 * Getter for {@code vehicle} field
+	 * @return the Vehicle object
+	 */
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+	
 	/**
 	 * Getter for {@code person} field
 	 * @return the Customer object.
