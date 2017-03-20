@@ -35,4 +35,9 @@ public class ShoppingArea {
 		}
 	}
 	
+	public void addToShoppingArea(Customer customer)
+	{
+		customers.add(customer);
+	}
+	
 }

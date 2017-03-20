@@ -157,7 +157,10 @@ public class Station {
 	 */
 	public void joinShoppingArea(Customer customer)
 	{
-
+		if(customer.isHappy())
+		{
+			shoppingArea.addToShoppingArea(customer);
+		}
 	}
 
 	/**
