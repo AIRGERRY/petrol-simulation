@@ -60,7 +60,6 @@ public class Station {
 	{
 		Person person = createPerson();
 		if(person != null){
-			System.out.println("Created " + person.toString());
 			//if isSpace(), joinPump()
 			//if happy(), joinShoppingArea()
 			//joinTill()
@@ -144,22 +143,45 @@ public class Station {
 
 	/**
 	 * Adds a vehicle to a Pump
+	 * @param person the person who owns the vehicle
 	 * @param vehicle the vehicle to add to a pump
 	 */
-	public void joinPump(Vehicle vehicle)
+	public void joinPump(Person person,Vehicle vehicle)
 	{
 		// getShortestQueue for pump and add vehicle
+		if(vehicle.tankFull())
+		{
+			double bill = vehicle.getTankSize() * Config.PRICE_PER_GALLON;
+			person.addToBill(bill);
+		}
 	}
 
 	/**
-	 * Adds a happy customer to the Shopingarea 
+	 * Adds a happy customer to the Shopingarea
+	 * @param person the person who is the customer
 	 * @param customer the customer to add to the shopping area
 	 */
-	public void joinShoppingArea(Customer customer)
+	public void joinShoppingArea(Person person, Customer customer)
 	{
 		if(customer.isHappy())
 		{
 			shoppingArea.addToShoppingArea(customer);
+			double bill = 0;
+			Random random = Random.getInstance();
+			if (person.getVehicle().getClass() == SmallCar.class)
+			{
+				bill = Config.SMALLCAR_SHOPPING_LOW + (random.get().nextInt(Config.SMALLCAR_SHOPPING_HIGH - Config.SMALLCAR_SHOPPING_LOW + 1));
+			}
+			else if (person.getVehicle().getClass() == Sedan.class)
+			{
+				bill = Config.SEDAN_SHOPPING_LOW + (random.get().nextInt(Config.SEDAN_SHOPPING_HIGH - Config.SEDAN_SHOPPING_LOW + 1));
+			}
+			else if (person.getVehicle().getClass() == Truck.class)
+			{
+				bill = Config.TRUCK_SHOPPING_LOW + (random.get().nextInt(Config.TRUCK_SHOPPING_HIGH - Config.TRUCK_SHOPPING_LOW + 1));
+			}
+			
+			person.addToBill(bill);
 		}
 	}
 
@@ -220,7 +242,7 @@ public class Station {
 	 */
 	public void addToMoneyEarned(double money)
 	{
-		moneyEarned =+ money;
+		moneyEarned += money;
 	}
 
 	/**
@@ -229,7 +251,7 @@ public class Station {
 	 */
 	public void addToMoneyLost(double money)
 	{
-		moneyLost =+ money;
+		moneyLost += money;
 	}
 
 }

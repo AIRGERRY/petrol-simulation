@@ -42,6 +42,9 @@ public class Config {
 	public static final int TRUCK_SHOPPING_LOW = 15;
 	public static final int TRUCK_SHOPPING_HIGH = 20;
 	
+	//Pump price
+	public static final double PRICE_PER_GALLON = 1.50;
+	
 	//Shopping time range
 	public static final int SMALLCAR_SHOPPING_TIME_LOW = 2;
 	public static final int SMALLCAR_SHOPPING_TIME_HIGH = 4;

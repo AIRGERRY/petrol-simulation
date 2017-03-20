@@ -7,7 +7,7 @@ import java.util.Iterator;
 /**
  * ShoppingArea class for happy customers
  * 
- * @author Ollie
+ * @author Ollie, Mosope
  * @version 1.1
  * @since 14 Mar 2017
  *
@@ -27,6 +27,7 @@ public class ShoppingArea {
 		while(customerIterator.hasNext()) {
 			Customer customer = customerIterator.next();
 			if (customer.getTime() == 0) {
+				
 				Station.getInstance().joinTill(customer);
 				customerIterator.remove();
 			} else {
@@ -35,6 +36,10 @@ public class ShoppingArea {
 		}
 	}
 	
+	/**
+	 * Adds a {@link Customer} to the {@code customers} array
+	 * @param customer
+	 */
 	public void addToShoppingArea(Customer customer)
 	{
 		customers.add(customer);
