@@ -59,10 +59,10 @@ public class Config {
 	public static final double TRUCK_SHOPPING = 1.0;
 	
 	//Vehicle probability
-	public static final double MOTORBIKE_PROBABILITY = 0.05; //0.01, 0.02, 0.03, 0.04, 0.05
-	public static final double SMALLCAR_PROBABILITY = 0.05;
-	public static final double SEDAN_PROBABILITY = 0.05;
-	public static double TRUCK_PROBABILITY = 0.02;
+
+	public static final double P = 0.05; //0.01, 0.02, 0.03, 0.04, 0.05; Probability for SmallCar/Motorbike
+	public static final double Q = 0.05; //0.01, 0.02, 0.03, 0.04, 0.05; Probability for Sedan
+	public static double T = 0.02; // Probability for Truck
 	
 	//Servicer details
 	public static final int PUMP_COUNT = 4;

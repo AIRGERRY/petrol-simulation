@@ -75,15 +75,13 @@ public class Station {
 		double r = Random.get().nextDouble();
 		Person person = null;
 
-		if (Config.ALLOW_TRUCKS && r <= Config.TRUCK_PROBABILITY ){
+		if (Config.ALLOW_TRUCKS && r <= Config.T ){
 			Vehicle vehicle = new Truck();
 			Customer customer = new Customer(true);
 			 person = new Person(customer,vehicle, 0);
 			 return person;
 		}
-		if(Config.SMALLCAR_PROBABILITY == Config.MOTORBIKE_PROBABILITY
-				&& Config.MOTORBIKE_PROBABILITY == Config.SEDAN_PROBABILITY
-				&& Config.SEDAN_PROBABILITY == Config.SMALLCAR_PROBABILITY)
+		if(Config.P == Config.Q)
 		{
 			int r2 = Random.get().nextInt(4);  
 			if(r2 ==0 ) {
@@ -116,25 +114,29 @@ public class Station {
 				}
 				
 			}
-			if (Config.ALLOW_TRUCKS && r <= Config.TRUCK_PROBABILITY ){
+			if (Config.ALLOW_TRUCKS && r <= Config.T ){
 				Vehicle vehicle = new Truck();
 				Customer customer = new Customer(true);
 				 person = new Person(customer,vehicle, 0);
 			}
-			 if(r <= Config.SMALLCAR_PROBABILITY ) {
+			 if(r <= Config.P ) {
+				 int r2 = Random.get().nextInt(3);  
+					if(r2 ==0 ) {
 				Vehicle vehicle = new SmallCar();
 				Customer customer = new Customer(true);
 				 person = new Person(customer,vehicle, 0);
+					}
+					else if (r2 ==1)
+					{
+						Vehicle vehicle = new Motorbike();
+						Customer customer = new Customer(true);
+						 person = new Person(customer,vehicle, 0);
+					}
 			}
-			 if (r <= Config.SEDAN_PROBABILITY){
+			 if (r <= Config.Q){
 				Vehicle vehicle = new Sedan();
 				Customer customer = new Customer(true);
 				person = new Person(customer,vehicle, 0);
-			}
-			  if (r <= Config.MOTORBIKE_PROBABILITY){
-				Vehicle vehicle = new Motorbike();
-				Customer customer = new Customer(true);
-				 person = new Person(customer,vehicle, 0);
 			}
 			return person;
 
