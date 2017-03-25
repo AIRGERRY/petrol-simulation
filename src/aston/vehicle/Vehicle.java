@@ -5,7 +5,7 @@ import aston.resources.Random;
 /**
  * Parent class defining the general fields for all vehicle classes.
  * 
- * @author Ollie
+ * @author Ollie, Mosope 
  * @version 1.3
  * @since 1 Mar 2017
  */
@@ -94,8 +94,17 @@ public abstract class Vehicle {
 	 */
 	public void resetTankLevel() {
 		this.tankLevel = 0;
+		this.isFull = false;
 	}
-	
+
+	/**
+	 * Sets the vaule of {@code isFull}
+	 * @param b {@code true} or {@code false} value
+	 */
+	public void setFull(boolean b)
+	{
+		isFull = b;
+	}
 	public abstract String toString();
 	
 }

@@ -28,6 +28,11 @@ public class Person {
 	private int spentWaiting;
 
 	/**
+	 * Holds the bill to pay tills, this inludes the price of the fuel and the items bought at the shopping area
+	 */
+	private double billToPay;
+	
+	/**
 	 * Constructor for {@code Person} class. Initialises class variables.
 	 */
 	public Person(Customer customer, Vehicle vehicle, int time) {
@@ -60,7 +65,23 @@ public class Person {
 	public int timeSpent() {
 		return this.spentWaiting;
 	}
+
+	/**
+	 * Adds the value of {@code bill} to the total {@code blllToPay}
+	 * @param bill the amount that has been charged
+	 */
+	public void addToBill(double bill) {
+		billToPay += bill;
+	}
 	
+	
+	/**
+	 * @return {@code billToPay} the total bill to pay
+	 */
+	public double getBill()
+	{
+		return billToPay;
+	}
 	
 	public String toString() {
 		boolean status = person.isHappy();
