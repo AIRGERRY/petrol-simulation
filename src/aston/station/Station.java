@@ -76,7 +76,7 @@ public class Station {
 		double r = Random.get().nextDouble();
 		Person person = null;
 
-		if (Config.ALLOW_TRUCKS && r <= Config.TRUCK_PROBABILITY ){
+		/*if (Config.ALLOW_TRUCKS && r <= Config.TRUCK_PROBABILITY ){
 			Vehicle vehicle = new Truck();
 			Customer customer = new Customer(true);
 			 person = new Person(customer,vehicle, 0);
@@ -139,7 +139,9 @@ public class Station {
 			}
 			return person;
 
-		}
+		}*/
+		
+		
 	}
 
 	/**
