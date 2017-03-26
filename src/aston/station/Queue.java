@@ -38,7 +38,7 @@ public class Queue {
 
 	public void put(Vehicle vehicle) {
 		try {
-			if ((this.queueLevel + vehicle.getQueueSize()) < Config.QUEUE_CAPACITY) {
+			if ((this.queueLevel + vehicle.getQueueSize()) < (Double)Config.get("queueCapacity")) {
 				this.queueLevel += vehicle.getQueueSize();
 				this.queue.put(vehicle);
 			}
