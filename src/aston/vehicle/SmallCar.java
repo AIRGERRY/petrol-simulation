@@ -1,6 +1,8 @@
 package aston.vehicle;
 
 import aston.resources.Config;
+import aston.resources.Random;
+import aston.resources.Range;
 
 /**
  * Small car class
@@ -18,9 +20,10 @@ public class SmallCar extends Vehicle {
 	 */
 	public SmallCar() {
 		super();
-		this.tankSize = Config.SMALLCAR_TANK_LOW + (this.random.get().nextInt(Config.SMALLCAR_TANK_HIGH - Config.SMALLCAR_TANK_LOW + 1));
-		this.queueSize = Config.SMALLCAR_SIZE;
-		this.happyTime = Config.SMALLCAR_HAPPY_TIME;
+		Range tank = Config.get("smallcarTank");
+		this.tankSize = (int)(tank.getLow() + (Random.get().nextInt((int)(tank.getHigh() - tank.getLow() + 1))));
+		this.queueSize = Config.get("smallcarSize");
+		this.happyTime = Config.get("smallcarHappyTime");
 	}
 	
 	public String toString() {

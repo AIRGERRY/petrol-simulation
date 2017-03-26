@@ -1,6 +1,8 @@
 package aston.vehicle;
 
 import aston.resources.Config;
+import aston.resources.Random;
+import aston.resources.Range;
 
 /**
  * Family sedan class
@@ -18,9 +20,10 @@ public class Sedan extends Vehicle {
 	 */
 	public Sedan() {
 		super();
-		this.tankSize = Config.SEDAN_TANK_LOW + (this.random.get().nextInt(Config.SEDAN_TANK_HIGH - Config.SEDAN_TANK_LOW + 1));
-		this.queueSize = Config.SEDAN_SIZE;
-		this.happyTime = Config.SEDAN_HAPPY_TIME;
+		Range tank = Config.get("sedanTank");
+		this.tankSize = (int)(tank.getLow() + (Random.get().nextInt((int)(tank.getHigh() - tank.getLow() + 1))));
+		this.queueSize = Config.get("sedanSize");
+		this.happyTime = Config.get("sedanHappyTime");
 	}
 	
 	public String toString() {

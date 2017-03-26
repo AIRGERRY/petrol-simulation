@@ -18,9 +18,9 @@ public class Motorbike extends Vehicle {
 	 */
 	public Motorbike() {
 		super();
-		this.tankSize = Config.MOTORBIKE_TANK;
-		this.queueSize = Config.MOTORBIKE_SIZE;
-		this.happyTime = Config.MOTORBIKE_HAPPY_TIME;
+		this.tankSize = Config.get("motorbikeTank");
+		this.queueSize = Config.get("motorbikeSize");
+		this.happyTime = Config.get("motorbikeHappyTime");
 	}
 	
 	public String toString() {
