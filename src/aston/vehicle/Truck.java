@@ -18,8 +18,8 @@ public class Truck extends Vehicle {
 	 */
 	public Truck() {
 		super();
-		Range tank = Config.get("truckTank");
-		this.tankSize = (int)(tank.getLow() + (Random.get().nextInt((int)(tank.getHigh() - tank.getLow() + 1))));
+		Range tank = (Range)Config.get("truckTank");
+		this.tankSize = new Double((tank.getLow() + (Random.get().nextInt(new Double(tank.getHigh() - tank.getLow() + 1).intValue())))).intValue();
 		this.queueSize = Config.get("truckSize");
 		this.happyTime = Config.get("truckHappyTime");
 	}

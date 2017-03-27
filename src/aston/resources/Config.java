@@ -30,7 +30,7 @@ public class Config {
 		internalSet("motorbikeTank", 5.0);
 		internalSet("smallcarTank", new Range(7.0, 9.0));
 		internalSet("sedanTank", new Range(12.0, 18.0));
-		internalSet("truckTankLow", new Range(30.0, 40.0));
+		internalSet("truckTank", new Range(30.0, 40.0));
 		
 		//Queue sizes
 		internalSet("motorbikeSize", 0.75);
@@ -39,7 +39,7 @@ public class Config {
 		internalSet("truckSize", 2.0);
 
 		//Happytime
-		internalSet("motorbikeHappyTime", 0);
+		internalSet("motorbikeHappyTime", 0.0);
 		internalSet("smallcarHappyTime", 5.0);
 		internalSet("sedanHappyTime", 10.0);
 		internalSet("truckHappyTime", 8.0);
