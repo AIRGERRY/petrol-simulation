@@ -84,7 +84,7 @@ public class Station {
 		Double q = Config.get("q");
 		Double t = Config.get("t");
 
-		Boolean allowTrucks = ((Double) Config.get("allowTrucks")) == 1.0 ? true : false;
+		Boolean allowTrucks = ((Double)Config.get("allowTrucks")) == 1.0 ? true : false;
 
 		if (allowTrucks && r <= t) {
 			Vehicle vehicle = new Truck();
@@ -159,7 +159,7 @@ public class Station {
 	public void joinPump(Person person, Vehicle vehicle) {
 		// getShortestQueue for pump and add vehicle
 		if (vehicle.tankFull()) {
-			double bill = vehicle.getTankSize() * new Integer(Config.get("pricePerGallon"));
+			double bill = vehicle.getTankSize() * (Double)Config.get("pricePerGallon");
 			person.addToBill(bill);
 		}
 	}
