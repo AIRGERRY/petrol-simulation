@@ -84,7 +84,7 @@ public class Station {
 		Double q = Config.get("q");
 		Double t = Config.get("t");
 
-		Boolean allowTrucks = (new Integer(Config.get("allowTrucks")) == 1.0 ? true : false);
+		Boolean allowTrucks = ((Double) Config.get("allowTrucks")) == 1.0 ? true : false;
 
 		if (allowTrucks && r <= t) {
 			Vehicle vehicle = new Truck();
