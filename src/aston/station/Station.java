@@ -22,8 +22,8 @@ import aston.vehicle.Vehicle;
 
 public class Station {
 
-	Integer tillCount = Config.get("tillCount");
-	Integer pumpCount = Config.get("tillCount");
+	Integer tillCount = ((Double)Config.get("tillCount")).intValue();
+	Integer pumpCount = ((Double)Config.get("tillCount")).intValue();
 
 	private Till[] tills = new Till[tillCount];
 	private Pump[] pumps = new Pump[pumpCount];
