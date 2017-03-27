@@ -25,12 +25,12 @@ public abstract class Vehicle {
 	/**
 	 * Minimum size of the tank. If there is no range, this is the only size
 	 */
-	protected int tankSize;
+	protected double tankSize;
 	
 	/**
 	 * Current level of the tank
 	 */
-	protected int tankLevel;
+	protected double tankLevel;
 	
 	/**
 	 * Whether or not the tank is full
@@ -45,7 +45,7 @@ public abstract class Vehicle {
 	/**
 	 * Time before a customer is declared 'unhappy'
 	 */
-	protected int happyTime;
+	protected double happyTime;
 	
 	
 	
@@ -63,7 +63,7 @@ public abstract class Vehicle {
 	 * @return The tank size
 	 */
 	public int getTankSize() {
-		return this.tankSize;
+		return new Double(this.tankSize).intValue();
 	}
 	
 	/**
