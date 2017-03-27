@@ -1,5 +1,7 @@
 package aston.station;
 
+import aston.resources.Config;
+
 /**
  * Pump class for vehicles
  * 
@@ -12,6 +14,7 @@ package aston.station;
 public class Pump extends Servicer {
 	
 	public Pump() {
+		super((Double)Config.get("queueCapacity"));
 		System.out.println("Pump initialised");
 	}
 	

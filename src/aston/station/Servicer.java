@@ -1,5 +1,7 @@
 package aston.station;
 
+import aston.resources.Config;
+
 /**
  * Parent class for Pump and Till
  * Holds a queue and takings for the simulation
@@ -28,8 +30,8 @@ public abstract class Servicer implements Runnable {
 	/**
 	 * Creates and initialises the fields of this class
 	 */
-	public Servicer() {
-		this.queue = new Queue();
+	public Servicer(double maxLevel) {
+		this.queue = new Queue(maxLevel);
 		this.revenue = 0.0;		
 	}
 	

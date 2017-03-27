@@ -1,5 +1,7 @@
 package aston.station;
 
+import aston.resources.Config;
+
 /**
  * 
  * 
@@ -12,6 +14,7 @@ package aston.station;
 public class Till extends Servicer {
 
 	public Till() {
+		super((Double)Config.get("queueCapacity"));
 		System.out.println("Till initialised");
 	}
 	

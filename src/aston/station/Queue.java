@@ -20,9 +20,12 @@ public class Queue {
 	private ArrayBlockingQueue<Vehicle> queue;
 
 	private double queueLevel;
+	
+	private double maxLevel;
 
-	public Queue() {
+	public Queue(double maxLevel) {
 		this.queue = new ArrayBlockingQueue<Vehicle>(4);
+		this.maxLevel = maxLevel;
 	}
 
 	public Vehicle take() {
@@ -46,6 +49,14 @@ public class Queue {
 			System.out.println("Problem adding object to queue - " + vehicle.toString());
 		}
 
+	}
+	
+	public boolean hasSpace() {
+		return (queueLevel < maxLevel);
+	}
+	
+	public double freeSpace() {
+		return (maxLevel - queueLevel);
 	}
 
 }
