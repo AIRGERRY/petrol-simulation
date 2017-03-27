@@ -65,9 +65,22 @@ public class Station {
 	public void newCustomerArrive() {
 		Person person = createPerson();
 		if (person != null) {
-			// if hasSpace(), joinPump()
-			// if happy(), joinShoppingArea()
-			// joinTill()
+			if(getShortestQueue(true) == null)
+			{
+				//todo 
+				System.out.println("No space, customer turns away");
+			}
+			else
+			{
+				joinPump(person, person.getVehicle());
+				
+				if (person.getCustomer().isHappy())
+				{
+					joinShoppingArea(person, person.getCustomer());
+				}
+				joinTill(person,person.getCustomer());
+			}
+			
 		}
 	}
 
@@ -159,6 +172,7 @@ public class Station {
 	public void joinPump(Person person, Vehicle vehicle) {
 		// getShortestQueue for pump and add vehicle
 		getShortestQueue(true).queue.put(vehicle);
+		
 		//if in front of queue start topping up
 		if (vehicle.tankFull()) {
 			double bill = vehicle.getTankSize() * (Double)Config.get("pricePerGallon");
@@ -193,12 +207,14 @@ public class Station {
 
 	/**
 	 * Adds a customer to a Till
+	 * @param person 
 	 * 
 	 * @param customer
 	 *            the customer to add to a till
 	 */
-	public void joinTill(Customer customer) {
+	public void joinTill(Person person, Customer customer) {
 		// getShortestQueue for till and add customer
+
 	}
 
 	/**
@@ -217,7 +233,13 @@ public class Station {
 				// if pumps[i].getCapacity() < shortestPump
 				// shortestpump = pumps[i]
 			}
+			if(shortestPump.hasSpace()){
 			return shortestPump;
+			}
+			else
+			{
+				return null;
+			}
 		}
 		Till shortestTill = tills[0];
 		for (int i = 0; i < tills.length; i++) {
