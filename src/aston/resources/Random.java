@@ -25,7 +25,7 @@ public class Random {
 	 * Private constructor, should only be accessed from {@link #getInsance() getInstance}
 	 */
 	private Random() {
-		random = new java.util.Random(Config.SEED);
+		random = new java.util.Random(new Integer((((Double) (Config.get("seed"))).intValue())));
 	}
 	
 	/**
