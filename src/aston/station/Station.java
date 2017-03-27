@@ -65,7 +65,7 @@ public class Station {
 	public void newCustomerArrive() {
 		Person person = createPerson();
 		if (person != null) {
-			// if isSpace(), joinPump()
+			// if hasSpace(), joinPump()
 			// if happy(), joinShoppingArea()
 			// joinTill()
 		}
@@ -158,6 +158,8 @@ public class Station {
 	 */
 	public void joinPump(Person person, Vehicle vehicle) {
 		// getShortestQueue for pump and add vehicle
+		getShortestQueue(true).queue.put(vehicle);
+		//if in front of queue start topping up
 		if (vehicle.tankFull()) {
 			double bill = vehicle.getTankSize() * (Double)Config.get("pricePerGallon");
 			person.addToBill(bill);
@@ -211,7 +213,7 @@ public class Station {
 	public Servicer getShortestQueue(boolean pump) {
 		if (pump) {
 			Pump shortestPump = pumps[0];
-			for (int i = 0; i < pumps.length; i++) {
+			for (int i = 1; i < pumps.length; i++) {
 				// if pumps[i].getCapacity() < shortestPump
 				// shortestpump = pumps[i]
 			}
