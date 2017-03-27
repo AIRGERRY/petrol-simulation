@@ -51,6 +51,22 @@ public abstract class Servicer implements Runnable {
 	}
 	
 	/**
+	 * Passthrough for {@code hasSpace} queue function
+	 * @return boolean {@code hasSpace}
+	 */
+	public boolean hasSpace() {
+		return this.queue.hasSpace();
+	}
+	
+	/**
+	 * Passthrough for {@code freeSpace} queue function
+	 * @return boolean {@code freeSpace}
+	 */
+	public double freeSpace() {
+		return this.queue.freeSpace();
+	}
+	
+	/**
 	 * Forces child classes to not compile until the run method is defined
 	 */
 	public abstract void run();
