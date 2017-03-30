@@ -70,8 +70,7 @@ public class Simulation {
 				System.out.println("--\n");
 			}
 		}
-
 		
-
+		final GUI start = new GUI(s); 
 	}
 }
