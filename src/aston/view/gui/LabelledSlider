@@ -17,8 +17,8 @@ public class LabelledSlider extends JComponent {
 	
 	private static final long serialVersionUID = 1L;
 	private String labelString;
-    private JLabel label;
-    private JSlider slider;
+   	private JLabel label;
+    	private JSlider slider;
 
 	public LabelledSlider(String text, int minValue, int maxValue, int startValue) {
 		this.setDoubleBuffered(true);
