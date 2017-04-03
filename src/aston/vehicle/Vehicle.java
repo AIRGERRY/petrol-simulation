@@ -1,16 +1,17 @@
 package aston.vehicle;
 
+import aston.person.PersonAttribute;
 import aston.resources.Random;
 
 /**
  * Parent class defining the general fields for all vehicle classes.
  * 
  * @author Ollie, Mosope 
- * @version 1.3
+ * @version 1.4
  * @since 1 Mar 2017
  */
 
-public abstract class Vehicle {
+public abstract class Vehicle extends PersonAttribute {
 	
 	/**
 	 * Instance of {@link #aston.resources.Random Random} class used for predictable results
@@ -105,6 +106,10 @@ public abstract class Vehicle {
 	{
 		isFull = b;
 	}
+	
+	/**
+	 * Abstract method for defining a vehicle in a string
+	 */
 	public abstract String toString();
 	
 }

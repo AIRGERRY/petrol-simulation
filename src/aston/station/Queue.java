@@ -3,11 +3,13 @@ package aston.station;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import aston.person.Customer;
+import aston.person.PersonAttribute;
 import aston.vehicle.Vehicle;
 import aston.resources.Config;
+import aston.resources.Log;
 
 /**
- * Queue for servicers
+ * Queue for servicers, handles both Customers and Vehicles
  * 
  * @author Ollie, Sope
  * @version 1.2
@@ -17,46 +19,122 @@ import aston.resources.Config;
 
 public class Queue {
 
-	private ArrayBlockingQueue<Vehicle> queue;
+	/**
+	 * Customer Queue
+	 */
+	private ArrayBlockingQueue<Customer> cQueue;
+	
+	/**
+	 * Vehicle Queue
+	 */
+	private ArrayBlockingQueue<Vehicle> vQueue;
 
+	/**
+	 * Current level of vehicles in the queue, from queueSize constants
+	 */
 	private double queueLevel;
 	
+	/**
+	 * Maximum level of this queue, for vehicles only
+	 */
 	private double maxLevel;
+	
+	/**
+	 * Whether to use customers or vehicles in this queue
+	 */
+	private boolean usingVehicle = false;
 
+	/**
+	 * Creates a vehicle queue
+	 * @param maxLevel Longest queue available
+	 */
 	public Queue(double maxLevel) {
-		this.queue = new ArrayBlockingQueue<Vehicle>(4);
+		this.vQueue = new ArrayBlockingQueue<Vehicle>(4);
 		this.maxLevel = maxLevel;
+		this.usingVehicle = true;
+	}
+	
+	/**
+	 * Creates a customer queue
+	 */
+	public Queue() {
+		this.cQueue = new ArrayBlockingQueue<Customer>(10);
+		this.usingVehicle = false;
 	}
 
-	public Vehicle take() {
+	/**
+	 * Take the next object from queue
+	 * Will wait until an object is available in the queue to take
+	 * @return Either a Customer or Vehicle
+	 */
+	public PersonAttribute take() {
 		try {
-			Vehicle vehicle = this.queue.take();
-			this.queueLevel -= vehicle.getQueueSize();
-			return vehicle;
+			if (usingVehicle) {
+				Vehicle vehicle = this.vQueue.take();
+				this.queueLevel -= vehicle.getQueueSize();
+				return vehicle;
+			} else {
+				Customer customer = this.cQueue.take();
+				return customer;
+			}
 		} catch (InterruptedException ex) {
-			System.out.println("Problem taking object from queue");
+			Log.log("Problem removing " + (usingVehicle?"vehicle":"customer") + " from queue");
 			return null;
 		}
 	}
 
-	public void put(Vehicle vehicle) {
+	/**
+	 * Adds an object to the end of the queue, if there is space
+	 * @param attribute The object to add, either a Customer or a Vehicle
+	 */
+	public void put(PersonAttribute attribute) {
 		try {
-			if ((this.queueLevel + vehicle.getQueueSize()) < (Double)Config.get("queueCapacity")) {
-				this.queueLevel += vehicle.getQueueSize();
-				this.queue.put(vehicle);
+			if (usingVehicle) {
+				if (attribute instanceof Vehicle) {
+					Vehicle vehicle = (Vehicle)attribute;
+					if ((this.queueLevel + vehicle.getQueueSize()) > (Double)Config.get("queueCapacity")) {
+						this.vQueue.put(vehicle);
+						this.queueLevel += vehicle.getQueueSize();
+					}
+				} else {
+					Log.log("Using vehicle, but a vehicle was not submitted to the queue", 3);
+				}
+			} else {
+				if (attribute instanceof Customer) {
+					Customer customer = (Customer)attribute;
+					this.cQueue.put(customer);
+				} else {
+					Log.log("Using customer, but a customer was not submitted to the queue", 3);
+				}
 			}
 		} catch (InterruptedException ex) {
-			System.out.println("Problem adding object to queue - " + vehicle.toString());
+			Log.log("Adding attribute to queue was interrupted", 3);
 		}
 
 	}
 	
-	public boolean hasSpace() {
-		return (queueLevel < maxLevel);
+	/**
+	 * Check for whether this queue has enough space free for the vehicle
+	 * @return Boolean Whether there is space or not
+	 */
+	public boolean hasSpace(Vehicle vehicle) {
+		return ((this.queueLevel + vehicle.getQueueSize()) < this.maxLevel);
 	}
 	
+	/**
+	 * Customer method for checking there is space in the queue
+	 * @return
+	 */
+	public boolean hasSpace() {
+		return (this.cQueue.remainingCapacity() > this.cQueue.size());
+	}
+	
+	/**
+	 * Check how much space is available in this queue
+	 * @return Double Amount of space free in this queue
+	 */
 	public double freeSpace() {
-		return (maxLevel - queueLevel);
+		return (this.maxLevel - this.queueLevel);
 	}
 
 }
