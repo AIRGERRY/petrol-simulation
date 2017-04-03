@@ -77,7 +77,7 @@ public class Station {
 			{
 				joinPump(person);
 
-				if (person.getCustomer().isHappy() && person.getVehicle().getClass() != Motorbike.class)
+				if (person.getCustomer().isHappy() && (person.getVehicle() instanceof Motorbike))
 				{
 					joinShoppingArea(person);
 				}
