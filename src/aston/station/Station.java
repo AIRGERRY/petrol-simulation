@@ -65,9 +65,28 @@ public class Station {
 	public void newCustomerArrive() {
 		Person person = createPerson();
 		if (person != null) {
-			// if hasSpace(), joinPump()
-			// if happy(), joinShoppingArea()
-			// joinTill()
+			if(getShortestQueue(true) == null)
+			{
+				//todo 
+				System.out.println("No space, customer turns away");
+				double bill = 0.0;
+				bill = person.getVehicle().getTankSize() * (double)Config.get("pricePerGallon");
+				moneyLost +=bill;
+			}
+			else
+			{
+				joinPump(person);
+
+				if (person.getCustomer().isHappy() && person.getVehicle().getClass() != Motorbike.class)
+				{
+					joinShoppingArea(person);
+				}
+				else
+				{
+					joinTill(person);
+				}
+			}
+
 		}
 	}
 
@@ -153,15 +172,14 @@ public class Station {
 	 * 
 	 * @param person
 	 *            the person who owns the vehicle
-	 * @param vehicle
-	 *            the vehicle to add to a pump
 	 */
-	public void joinPump(Person person, Vehicle vehicle) {
+	public void joinPump(Person person) {
 		// getShortestQueue for pump and add vehicle
-		getShortestQueue(true).queue.put(vehicle);
+		getShortestQueue(true).queue.put(person.getVehicle());
+
 		//if in front of queue start topping up
-		if (vehicle.tankFull()) {
-			double bill = vehicle.getTankSize() * (Double)Config.get("pricePerGallon");
+		if (person.getVehicle().tankFull()) {
+			double bill = person.getVehicle().getTankSize() * (Double)Config.get("pricePerGallon");
 			person.addToBill(bill);
 		}
 	}
@@ -171,12 +189,11 @@ public class Station {
 	 * 
 	 * @param person
 	 *            the person who is the customer
-	 * @param customer
-	 *            the customer to add to the shopping area
+
 	 */
-	public void joinShoppingArea(Person person, Customer customer) {
-		if (customer.isHappy()) {
-			shoppingArea.addToShoppingArea(customer);
+	public void joinShoppingArea(Person person) {
+		if (person.getCustomer().isHappy()) {
+			shoppingArea.addToShoppingArea(person);
 			double bill = 0;
 			Range range = new Range(0.0, 0.0);
 			if (person.getVehicle() instanceof SmallCar) {
@@ -193,12 +210,19 @@ public class Station {
 
 	/**
 	 * Adds a customer to a Till
-	 * 
-	 * @param customer
-	 *            the customer to add to a till
+	 * @param person    the person who is the customer to add to a till
 	 */
-	public void joinTill(Customer customer) {
+	public void joinTill(Person person) {
 		// getShortestQueue for till and add customer
+
+		//getShortestQueue(false).queue.put(person.getCustomer());
+		//if in front
+		moneyEarned += person.getBill();
+		for(int i=0;i<pumps.length;i++)
+		{
+				pumps[i].queue.take();
+		}
+		
 	}
 
 	/**
@@ -214,15 +238,25 @@ public class Station {
 		if (pump) {
 			Pump shortestPump = pumps[0];
 			for (int i = 1; i < pumps.length; i++) {
-				// if pumps[i].getCapacity() < shortestPump
-				// shortestpump = pumps[i]
+				if (pumps[i].freeSpace() < shortestPump.freeSpace())
+				{
+				 shortestPump = pumps[i];
+				}
 			}
-			return shortestPump;
+			if(shortestPump.hasSpace()){
+				return shortestPump;
+			}
+			else
+			{
+				return null;
+			}
 		}
 		Till shortestTill = tills[0];
 		for (int i = 0; i < tills.length; i++) {
-			// if tills[i].getCapacity() < shortestTill
-			// shortestpump = pumps[i]
+			 if (tills[i].freeSpace() < shortestTill.freeSpace())
+			 {
+			 shortestTill = tills[i];
+			 }
 		}
 		return shortestTill;
 	}

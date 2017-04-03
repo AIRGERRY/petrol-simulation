@@ -61,17 +61,16 @@ public class Simulation {
 			{
 				System.out.println(p1.toString());
 				p1.getVehicle().setFull(true);
-				station.joinPump(p1, p1.getVehicle());
+				station.joinPump(p1);
 				System.out.println("fuel bill to pay: "+p1.getBill());
-				station.joinShoppingArea(p1, p1.getCustomer());
+				station.joinShoppingArea(p1);
 				System.out.println("fuel and shopping bill to pay: "+p1.getBill());
 				station.addToMoneyEarned(p1.getBill());
 				System.out.println("Total money earned by Station: "+station.getMoneyEarned());
 				System.out.println("--\n");
 			}
 		}
-
 		
-
+		final GUI start = new GUI(s); 
 	}
 }

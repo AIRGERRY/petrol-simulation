@@ -1,6 +1,8 @@
 package aston.station;
 
 import aston.person.Customer;
+import aston.person.Person;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -15,23 +17,23 @@ import java.util.Iterator;
 
 public class ShoppingArea {
 	
-	private ArrayList<Customer> customers;
+	private ArrayList<Person> persons;
 	
 	public ShoppingArea() {
-		this.customers = new ArrayList<Customer>();
+		this.persons = new ArrayList<Person>();
 		
 	}
 	
 	public void tick() {
-		Iterator<Customer> customerIterator = customers.iterator();
-		while(customerIterator.hasNext()) {
-			Customer customer = customerIterator.next();
-			if (customer.getTime() == 0) {
+		Iterator<Person> personIterator = persons.iterator();
+		while(personIterator.hasNext()) {
+			Person person = personIterator.next();
+			if (person.getCustomer().getTime() == 0) {
 				
-				Station.getInstance().joinTill(customer);
-				customerIterator.remove();
+				Station.getInstance().joinTill(person);
+				personIterator.remove();
 			} else {
-				customer.decrementTime();
+				person.getCustomer().decrementTime();
 			}
 		}
 	}
@@ -40,9 +42,9 @@ public class ShoppingArea {
 	 * Adds a {@link Customer} to the {@code customers} array
 	 * @param customer
 	 */
-	public void addToShoppingArea(Customer customer)
+	public void addToShoppingArea(Person person)
 	{
-		customers.add(customer);
+		persons.add(person);
 	}
 	
 }
