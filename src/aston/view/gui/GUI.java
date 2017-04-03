@@ -51,8 +51,8 @@ public GUI() {
 	quitButton.setText("Quit");
 	priceEntry.setEditable(true);
 	timeEntry.setEditable(true);
-	qslider.setMajorTickSpacing(1);// dont know how to make the spacing go by using double :(
-	pslider.setMajorTickSpacing(1);// ^^
+	qslider.setMajorTickSpacing(2);// dont know how to make the spacing go by using double :(
+	pslider.setMajorTickSpacing(2);// ^^
 	
 	
 	}
