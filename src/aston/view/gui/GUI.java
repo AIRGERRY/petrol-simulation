@@ -6,13 +6,13 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import aston.simulation.Simulation;
+import aston.resources.Config;
 
-/**1
+/**
  * Graphical UI
  * 
  * @author Ollie, Gerard
- * @version 1.1
- * @param <LabelledSlider>
+ * @version 1.4
  * @since 8 Mar 2017
  *
  */
@@ -23,37 +23,50 @@ public class GUI {
 	private LabelledSlider pSlider;
 	private LabelledSlider qSlider;
 	
+	private JTextField priceEntry;
+	private JTextField timeEntry;
+	private JCheckBox allowTrucks;
+	private JRadioButton pRadio1;
+	private JRadioButton pRadio2;
+	private JRadioButton pRadio3;
+	private JRadioButton tRadio1;
+	private JRadioButton tRadio2;
+	private JRadioButton tRadio3;
+	
 	//Default values for parameters.
 	private int max = 5; //Maximum probability of 0.5.
 	private int min = 1; //Probability cannot go below 0.1.
 	private int defaultValue = 1; //Default probability value.
 
 	
-	public GUI(Simulation s) {
+	public GUI() {
 		
-		this.s = s;
+		//this.s = s;
 		final String createFrameString = "CreateFrame";
 
 		//Level 1: Created necessary components.
 		pSlider = new LabelledSlider("p: ", min, max, defaultValue);
 		qSlider = new LabelledSlider("q: ", min, max, defaultValue);
-		final JLabel priceLabel = new JLabel ("Price of Gallon: Â£");
+		final JLabel priceLabel = new JLabel ("Price of Gallon: £");
 		final JLabel timeLabel = new JLabel ("Running Time: ");
-		final JTextField priceEntry = new JTextField (9);
-		final JTextField timeEntry = new JTextField(9);
-		final JCheckBox box = new JCheckBox("Include Trucks?");
+		priceEntry = new JTextField (9);
+		timeEntry = new JTextField(9);
+		allowTrucks = new JCheckBox("Include Trucks?");
 		
 		final JButton configButton = new JButton("Configure");
 		final JButton closeButton = new JButton("Close");
 		final JLabel pumpLabel = new JLabel("Pumps: ");
-		final JRadioButton pRadio = new JRadioButton("Pump 1");
-		final JRadioButton pRadio2 = new JRadioButton("Pump 2");
-		final JRadioButton pRadio3 = new JRadioButton("Pump 4");
+		pRadio1 = new JRadioButton("Pump 1");
+		pRadio2 = new JRadioButton("Pump 2");
+		pRadio3 = new JRadioButton("Pump 4");
 		
 		final JLabel tillLabel = new JLabel("Till: ");
-		final JRadioButton tRadio = new JRadioButton("Till 1");
-		final JRadioButton tRadio2 = new JRadioButton("Till 2");
-		final JRadioButton tRadio3 = new JRadioButton("Till 4");
+		tRadio1 = new JRadioButton("Till 1");
+		tRadio2 = new JRadioButton("Till 2");
+		tRadio3 = new JRadioButton("Till 4");
+		
+		
+		configButton.addActionListener((java.awt.event.ActionEvent event) -> saveConfig());
 		
 		//Level 2: Set properties.
 		priceEntry.setEditable(true);
@@ -108,15 +121,15 @@ public class GUI {
 		
 		topPanel.add(slidersPanel, BorderLayout.NORTH);
 		topPanel.add(entryPanel, BorderLayout.CENTER);
-		topPanel.add(box, BorderLayout.SOUTH);
+		topPanel.add(allowTrucks, BorderLayout.SOUTH);
 		
 		pumpPanel.add(pumpLabel);
-		pumpPanel.add(pRadio);
+		pumpPanel.add(pRadio1);
 		pumpPanel.add(pRadio2);
 		pumpPanel.add(pRadio3);
 		
 		tillPanel.add(tillLabel);
-		tillPanel.add(tRadio);
+		tillPanel.add(tRadio1);
 		tillPanel.add(tRadio2);
 		tillPanel.add(tRadio3);
 		
@@ -154,7 +167,7 @@ public class GUI {
 		      char c = e.getKeyChar();
 		      if (!((c >= '0') && (c <= '9') ||
 		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
+		         (c == KeyEvent.VK_DELETE) || (c == '.'))) {
 		        e.consume();
 		      }
 		    }
@@ -165,7 +178,7 @@ public class GUI {
 		      char c = e.getKeyChar();
 		      if (!((c >= '0') && (c <= '9') ||
 		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
+		         (c == KeyEvent.VK_DELETE) || (c == '.')))  {
 		        e.consume();
 		      }
 		    }
@@ -187,6 +200,31 @@ public class GUI {
 			if (response == JOptionPane.YES_OPTION) {
 				System.exit(0);
 			}
+		}
+		
+		private void saveConfig() {
+			Config.set("pricePerGallon", Double.parseDouble(priceEntry.getText()));
+			Config.set("p", new Double(pSlider.getValue()));
+			Config.set("q", new Double(qSlider.getValue()));
+			Config.set("allowTrucks", new Double(allowTrucks.isSelected()?1.0:0.0));
+			Double pumpCount = 0.0;
+			if(pRadio1.isSelected()) {
+				pumpCount = 1.0;
+			} else if (pRadio2.isSelected()) {
+				pumpCount = 2.0;
+			} else if (pRadio3.isSelected()) {
+				pumpCount = 4.0;
+			}
+			Config.set("pumpCount", pumpCount);
+			Double tillCount = 0.0;
+			if(tRadio1.isSelected()) {
+				tillCount = 1.0;
+			} else if (tRadio2.isSelected()) {
+				tillCount = 2.0;
+			} else if (tRadio3.isSelected()) {
+				tillCount = 4.0;
+			}
+			Config.set("tillCount", tillCount);
 		}
 }
 
