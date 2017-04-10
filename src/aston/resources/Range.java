@@ -27,4 +27,7 @@ public class Range {
 		return this.high;
 	}
 
+	public String toString() {
+		return "[lower = " + low + ", upper = " + high + "]";
+	}
 }
