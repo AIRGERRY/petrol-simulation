@@ -65,7 +65,7 @@ public class Station {
 	public void newCustomerArrive() {
 		Person person = createPerson();
 		if (person != null) {
-			if(getShortestQueue(true) == null)
+			if(getShortestQueue(person.getVehicle()) == null)
 			{
 				//todo 
 				System.out.println("No space, customer turns away");
@@ -175,7 +175,7 @@ public class Station {
 	 */
 	public void joinPump(Person person) {
 		// getShortestQueue for pump and add vehicle
-		getShortestQueue(true).queue.put(person.getVehicle());
+		getShortestQueue(person.getVehicle()).queue.put(person.getVehicle());
 
 		//if in front of queue start topping up
 		if (person.getVehicle().tankFull()) {
@@ -234,23 +234,24 @@ public class Station {
 	 *            shortest Till queue
 	 * @return {@link Servicer} The shortest Pump/Til
 	 */
-	public Servicer getShortestQueue(boolean pump) {
-		if (pump) {
-			Pump shortestPump = pumps[0];
-			for (int i = 1; i < pumps.length; i++) {
-				if (pumps[i].freeSpace() < shortestPump.freeSpace())
-				{
-				 shortestPump = pumps[i];
-				}
-			}
-			if(shortestPump.hasSpace()){
-				return shortestPump;
-			}
-			else
+	public Pump getShortestQueue(Vehicle vehicle) {
+		Pump shortestPump = pumps[0];
+		for (int i = 1; i < pumps.length; i++) {
+			if (pumps[i].freeSpace() < shortestPump.freeSpace())
 			{
-				return null;
+			 shortestPump = pumps[i];
 			}
 		}
+		if(shortestPump.hasSpace(vehicle)){
+			return shortestPump;
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	public Till getShortestQueue() {
 		Till shortestTill = tills[0];
 		for (int i = 0; i < tills.length; i++) {
 			 if (tills[i].freeSpace() < shortestTill.freeSpace())
