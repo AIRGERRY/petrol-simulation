@@ -130,4 +130,19 @@ public class Config {
 			configDouble.put(key, (Double)value);
 		}
 	}
+	
+	public static String outString() {
+		String output = "";
+		Iterator<Entry<String, Range>> rangeIt = getInstance().configRange.entrySet().iterator();
+		while(rangeIt.hasNext()) {
+			Entry<String, Range> entry = rangeIt.next();
+			output += "[" + entry.getKey() + " = " + entry.getValue().toString() + "] ";
+		}
+		Iterator<Entry<String, Double>> doubleIt = getInstance().configDouble.entrySet().iterator();
+		while(doubleIt.hasNext()) {
+			Entry<String, Double> entry = doubleIt.next();
+			output += "[" + entry.getKey() + " = " + entry.getValue() + "] ";
+		}
+		return output;
+	}
 }
