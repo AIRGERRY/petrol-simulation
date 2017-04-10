@@ -67,7 +67,6 @@ public class Station {
 		if (person != null) {
 			if(getShortestQueue(true, person.getVehicle()) == null)
 			{
-				//todo 
 				System.out.println("No space, customer turns away");
 				double bill = 0.0;
 				bill = person.getVehicle().getTankSize() * (double)Config.get("pricePerGallon");
@@ -214,8 +213,7 @@ public class Station {
 	 */
 	public void joinTill(Person person) {
 		// getShortestQueue for till and add customer
-
-		//getShortestQueue(false).queue.put(person.getCustomer());
+		getShortestQueue(false, null).queue.put(person.getCustomer());
 		//if in front
 		moneyEarned += person.getBill();
 		for(int i=0;i<pumps.length;i++)
