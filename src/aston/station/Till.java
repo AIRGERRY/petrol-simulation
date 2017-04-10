@@ -14,7 +14,7 @@ import aston.resources.Config;
 public class Till extends Servicer {
 
 	public Till() {
-		super((Double)Config.get("queueCapacity"));
+		super();
 		System.out.println("Till initialised");
 	}
 	

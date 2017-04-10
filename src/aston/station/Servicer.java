@@ -1,6 +1,7 @@
 package aston.station;
 
 import aston.resources.Config;
+import aston.vehicle.Vehicle;
 
 /**
  * Parent class for Pump and Till
@@ -35,6 +36,11 @@ public abstract class Servicer implements Runnable {
 		this.revenue = 0.0;		
 	}
 	
+	public Servicer () {
+		this.queue = new Queue();
+		this.revenue = 0.0;
+	}
+	
 	/**
 	 * Getter for {@code revenue}
 	 * @return {@code double} Revenue taken by this servicer
@@ -48,6 +54,14 @@ public abstract class Servicer implements Runnable {
 	 */
 	public void resetRevenue() {
 		this.revenue = 0;
+	}
+	
+	/**
+	 * Passthrough for {@code hasSpace} queue function
+	 * @return boolean {@code hasSpace}
+	 */
+	public boolean hasSpace(Vehicle vehicle) {
+		return this.queue.hasSpace(vehicle);
 	}
 	
 	/**
