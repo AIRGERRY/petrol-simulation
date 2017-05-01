@@ -25,6 +25,7 @@ public class Config {
 		this.configRange = new HashMap<String, Range>();
 		
 		internalSet("ticksPerMinute", 6.0);
+		internalSet("totalTicks", 1440.0);
 		
 		//Tank sizes
 		internalSet("motorbikeTank", 5.0);
@@ -53,9 +54,6 @@ public class Config {
 		internalSet("smallcarShoppingTime", new Range(2.0, 4.0));
 		internalSet("sedanShoppingTime", new Range(2.0, 5.0));
 		internalSet("truckShoppingTime", new Range(4.0, 6.0));
-		
-		internalSet("", .0);
-		internalSet("", new Range(.0, .0));
 		
 		//Price per gallon
 		internalSet("pricePerGallon", 1.5);

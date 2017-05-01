@@ -1,5 +1,10 @@
 package aston.resources;
 
+import java.util.concurrent.CyclicBarrier;
+
+import aston.simulation.Simulation;
+import aston.station.Station;
+
 /**
  * Class that handles ticks and timings
  * 
@@ -10,25 +15,33 @@ package aston.resources;
  */
 
 public class Ticker {
-	public Integer currentTick;
-	public Integer maxTicks;
+	public static Integer currentTick = 0;
+	
+	private static Runnable tick = new Runnable() {
+		public void run() {
+			if (currentTick == ((Double)Config.get("totalTicks")).intValue()) {
+				barrier = null;
+				System.out.println("Simulation complete");
+				Simulation.end();
+			} else {
+				currentTick += 1;
+				System.out.println("Current tick - " + currentTick);
+			}
+		}
+	};
+	
+	private static CyclicBarrier barrier = null;
 	
 	private static Ticker instance = null;
 	
-	public static void startTicker() {
-		if (instance == null) {
-			instance = new Ticker();
-		}
-		
-	}
-	
 	private Ticker() {
-		for (currentTick = 0; currentTick <= maxTicks; currentTick++) {
-			tick();
-		}
-	}
+		int threadCount = (int)((Double)Config.get("tillCount") + (Double)Config.get("pumpCount")) + 1;		
+	}	
 	
-	private void tick() {
-		
+	public static CyclicBarrier getBarrier() {
+		if (barrier == null) {
+			barrier = new CyclicBarrier((int)((Double)Config.get("tillCount") + (Double)Config.get("pumpCount")) + 1, tick);
+		}
+		return barrier;
 	}
 }

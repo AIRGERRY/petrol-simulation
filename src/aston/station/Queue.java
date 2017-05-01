@@ -68,18 +68,13 @@ public class Queue {
 	 * @return Either a Customer or Vehicle
 	 */
 	public PersonAttribute take() {
-		try {
-			if (usingVehicle) {
-				Vehicle vehicle = this.vQueue.take();
-				this.queueLevel -= vehicle.getQueueSize();
-				return vehicle;
-			} else {
-				Customer customer = this.cQueue.take();
-				return customer;
-			}
-		} catch (InterruptedException ex) {
-			Log.log("Problem removing " + (usingVehicle?"vehicle":"customer") + " from queue");
-			return null;
+		if (usingVehicle) {
+			Vehicle vehicle = this.vQueue.poll();
+			if (vehicle != null) { this.queueLevel -= vehicle.getQueueSize(); }
+			return vehicle;
+		} else {
+			Customer customer = this.cQueue.poll();
+			return customer;
 		}
 	}
 
@@ -92,9 +87,10 @@ public class Queue {
 			if (usingVehicle) {
 				if (attribute instanceof Vehicle) {
 					Vehicle vehicle = (Vehicle)attribute;
-					if ((this.queueLevel + vehicle.getQueueSize()) > (Double)Config.get("queueCapacity")) {
+					if ((this.queueLevel + vehicle.getQueueSize()) < (Double)Config.get("queueCapacity")) {
 						this.vQueue.put(vehicle);
 						this.queueLevel += vehicle.getQueueSize();
+						System.out.println(vehicle.toString() + " added to pump");
 					}
 				} else {
 					Log.log("Using vehicle, but a vehicle was not submitted to the queue", 3);

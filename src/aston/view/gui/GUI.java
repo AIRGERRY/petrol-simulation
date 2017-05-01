@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import aston.simulation.Simulation;
+import aston.station.Station;
 import aston.resources.Config;
 
 /**
@@ -154,13 +155,7 @@ public class GUI {
 			}
 		});
 		
-		closeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JComponent c = (JComponent) e.getSource();
-				JFrame f = (JFrame) c.getClientProperty(createFrameString);
-				f.dispose();
-			}
-		});
+		closeButton.addActionListener((java.awt.event.ActionEvent event) -> exitApp());
 		
 		priceEntry.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -204,6 +199,7 @@ public class GUI {
 		
 		private void saveConfig() {
 			Config.set("pricePerGallon", Double.parseDouble(priceEntry.getText()));
+			Config.set("totalTicks", Double.parseDouble(timeEntry.getText()));
 			Config.set("p", new Double(pSlider.getValue()));
 			Config.set("q", new Double(qSlider.getValue()));
 			Config.set("allowTrucks", new Double(allowTrucks.isSelected()?1.0:0.0));
@@ -225,6 +221,7 @@ public class GUI {
 				tillCount = 4.0;
 			}
 			Config.set("tillCount", tillCount);
+			Simulation.station = Station.getInstance();
 		}
 }
 

@@ -1,5 +1,7 @@
 package aston.station;
 
+import java.util.concurrent.CyclicBarrier;
+
 import aston.resources.Config;
 import aston.vehicle.Vehicle;
 
@@ -19,6 +21,11 @@ import aston.vehicle.Vehicle;
 public abstract class Servicer implements Runnable {
 	
 	/**
+	 * Holds the CyclicBarrier object for ticks
+	 */
+	protected CyclicBarrier barrier;
+	
+	/**
 	 * Holds the {@code queue} object containing the list and order of customer at the servicer
 	 */
 	protected Queue queue;
@@ -36,7 +43,7 @@ public abstract class Servicer implements Runnable {
 		this.revenue = 0.0;		
 	}
 	
-	public Servicer () {
+	public Servicer() {
 		this.queue = new Queue();
 		this.revenue = 0.0;
 	}

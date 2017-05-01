@@ -20,7 +20,6 @@ public class Motorbike extends Vehicle {
 		super();
 		this.tankSize = Config.get("motorbikeTank");
 		this.queueSize = Config.get("motorbikeSize");
-		System.out.println(new Double(Config.get("motorbikeHappyTime").toString()));
 		this.happyTime = Config.get("motorbikeHappyTime");
 	}
 	

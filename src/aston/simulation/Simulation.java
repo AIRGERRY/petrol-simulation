@@ -18,9 +18,11 @@ import aston.station.*;
  */
 
 public class Simulation {
+	
+	public static Station station = null;
 
 	public static void main(String args[]) {
-		Station station = Station.getInstance();
+		//Station station = Station.getInstance();
 		//		System.out.println("Simulator initialised");
 		//		
 		//		System.out.println(new Motorbike().toString());
@@ -52,7 +54,7 @@ public class Simulation {
 		
 
 		//Fuel and Shoping bill test
-		System.out.println("\n Shopping bill test"+"\n"+"-----");
+		/*System.out.println("\n Shopping bill test"+"\n"+"-----");
 		for (int i=0; i<20; i++)
 		{
 			Person p1 = station.createPerson();
@@ -68,8 +70,12 @@ public class Simulation {
 				System.out.println("Total money earned by Station: "+station.getMoneyEarned());
 				System.out.println("--\n");
 			}
-		}
+		}*/
 		
 		final GUI start = new GUI(); 
+	}
+	
+	public static void end() {
+		System.exit(0);
 	}
 }
