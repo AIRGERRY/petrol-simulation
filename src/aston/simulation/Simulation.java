@@ -3,8 +3,6 @@ package aston.simulation;
 import aston.vehicle.*;
 import aston.view.gui.GUI;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import aston.person.Person;
 import aston.resources.*;

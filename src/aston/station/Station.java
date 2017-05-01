@@ -1,10 +1,13 @@
 package aston.station;
 
+import java.util.concurrent.BrokenBarrierException;
+
 import aston.person.Customer;
 import aston.person.Person;
 import aston.resources.Config;
 import aston.resources.Random;
 import aston.resources.Range;
+import aston.resources.Ticker;
 import aston.vehicle.Motorbike;
 import aston.vehicle.Sedan;
 import aston.vehicle.SmallCar;
@@ -22,8 +25,8 @@ import aston.vehicle.Vehicle;
 
 public class Station {
 
-	Integer tillCount = ((Double)Config.get("tillCount")).intValue();
-	Integer pumpCount = ((Double)Config.get("tillCount")).intValue();
+	Integer tillCount = ((Double) Config.get("tillCount")).intValue();
+	Integer pumpCount = ((Double) Config.get("pumpCount")).intValue();
 
 	private Till[] tills = new Till[tillCount];
 	private Pump[] pumps = new Pump[pumpCount];
@@ -40,14 +43,16 @@ public class Station {
 	 * Should only be called from getInstance method
 	 */
 	private Station() {
+		System.out.println("Station started");
 		for (int i = 0; i < tillCount; i++) {
-			tills[i] = new Till();
+			tills[i] = new Till(Ticker.getBarrier());
 			new Thread(tills[i]).start();
 		}
 		for (int i = 0; i < pumpCount; i++) {
-			pumps[i] = new Pump();
+			pumps[i] = new Pump(Ticker.getBarrier());
 			new Thread(pumps[i]).start();
 		}
+		tick();
 	}
 
 	public static Station getInstance() {
@@ -65,26 +70,23 @@ public class Station {
 	public void newCustomerArrive() {
 		Person person = createPerson();
 		if (person != null) {
-			if(getShortestQueue(person.getVehicle()) == null)
-			{
-				//todo 
+			if (getShortestQueue(person.getVehicle()) == null) {
+				// todo
 				System.out.println("No space, customer turns away");
 				double bill = 0.0;
-				bill = person.getVehicle().getTankSize() * (double)Config.get("pricePerGallon");
-				moneyLost +=bill;
-			}
-			else
-			{
+				bill = person.getVehicle().getTankSize() * (double) Config.get("pricePerGallon");
+				moneyLost += bill;
+			} else {
 				joinPump(person);
 
-				if (person.getCustomer().isHappy() && (person.getVehicle() instanceof Motorbike))
-				{
-					joinShoppingArea(person);
-				}
-				else
-				{
-					joinTill(person);
-				}
+				// if (person.getCustomer().isHappy() && (person.getVehicle()
+				// instanceof Motorbike))
+				// {
+				// joinShoppingArea(person);
+				// }
+				// else
+				// {
+				// joinTill(person);
 			}
 
 		}
@@ -103,7 +105,7 @@ public class Station {
 		Double q = Config.get("q");
 		Double t = Config.get("t");
 
-		Boolean allowTrucks = ((Double)Config.get("allowTrucks")) == 1.0 ? true : false;
+		Boolean allowTrucks = ((Double) Config.get("allowTrucks")) == 1.0 ? true : false;
 
 		if (allowTrucks && r <= t) {
 			Vehicle vehicle = new Truck();
@@ -177,11 +179,14 @@ public class Station {
 		// getShortestQueue for pump and add vehicle
 		getShortestQueue(person.getVehicle()).queue.put(person.getVehicle());
 
-		//if in front of queue start topping up
-		if (person.getVehicle().tankFull()) {
-			double bill = person.getVehicle().getTankSize() * (Double)Config.get("pricePerGallon");
-			person.addToBill(bill);
-		}
+		// TODO Not required? Need to make sure
+
+		// if in front of queue start topping up
+		// if (person.getVehicle().tankFull()) {
+		// double bill = person.getVehicle().getTankSize() *
+		// (Double)Config.get("pricePerGallon");
+		// person.addToBill(bill);
+		// }
 	}
 
 	/**
@@ -189,7 +194,7 @@ public class Station {
 	 * 
 	 * @param person
 	 *            the person who is the customer
-
+	 * 
 	 */
 	public void joinShoppingArea(Person person) {
 		if (person.getCustomer().isHappy()) {
@@ -210,19 +215,20 @@ public class Station {
 
 	/**
 	 * Adds a customer to a Till
-	 * @param person    the person who is the customer to add to a till
+	 * 
+	 * @param person
+	 *            the person who is the customer to add to a till
 	 */
 	public void joinTill(Person person) {
 		// getShortestQueue for till and add customer
 
-		//getShortestQueue(false).queue.put(person.getCustomer());
-		//if in front
+		// getShortestQueue(false).queue.put(person.getCustomer());
+		// if in front
 		moneyEarned += person.getBill();
-		for(int i=0;i<pumps.length;i++)
-		{
-				pumps[i].queue.take();
+		for (int i = 0; i < pumps.length; i++) {
+			pumps[i].queue.take();
 		}
-		
+
 	}
 
 	/**
@@ -232,34 +238,38 @@ public class Station {
 	 *            whether it checks Pump or Till. <code>true</code> will check
 	 *            shortest Pump queue, <code>false</code> will check the
 	 *            shortest Till queue
-	 * @return {@link Servicer} The shortest Pump/Til
+	 * @return {@link Servicer} The shortest Pump/Till
 	 */
 	public Pump getShortestQueue(Vehicle vehicle) {
 		Pump shortestPump = pumps[0];
 		for (int i = 1; i < pumps.length; i++) {
-			if (pumps[i].freeSpace() < shortestPump.freeSpace())
-			{
-			 shortestPump = pumps[i];
+			Pump newPump = pumps[i];
+			if (newPump.freeSpace() > shortestPump.freeSpace()) {
+				shortestPump = pumps[i];
 			}
 		}
-		if(shortestPump.hasSpace(vehicle)){
+		if (shortestPump.hasSpace(vehicle)) {
 			return shortestPump;
-		}
-		else
-		{
+		} else {
 			return null;
 		}
 	}
-	
+
 	public Till getShortestQueue() {
 		Till shortestTill = tills[0];
 		for (int i = 0; i < tills.length; i++) {
-			 if (tills[i].freeSpace() < shortestTill.freeSpace())
-			 {
-			 shortestTill = tills[i];
-			 }
+			if (tills[i].freeSpace() < shortestTill.freeSpace()) {
+				shortestTill = tills[i];
+			}
 		}
 		return shortestTill;
+	}
+
+	public void tick() {
+		while (true) {
+		newCustomerArrive();
+		try { Ticker.getBarrier().await(); } catch (InterruptedException e) { System.out.println("ended"); } catch (BrokenBarrierException e) { System.out.println("ended"); }
+		}
 	}
 
 	/**
