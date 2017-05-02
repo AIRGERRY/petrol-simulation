@@ -98,22 +98,98 @@ public class Station {
 	 * @return a {@code Person} object
 	 */
 	public Person createPerson() {
-		double r = Random.get().nextDouble();
+		
 		Person person = null;
 
-		Double p = Config.get("p");
-		Double q = Config.get("q");
-		Double t = Config.get("t");
+		Double p = Config.get("p"); //Probability for smallcar/motorbike
+		Double q = Config.get("q"); //Probability for sedan
+		Double t = Config.get("t"); //Probability for truck
 
 		Boolean allowTrucks = ((Double) Config.get("allowTrucks")) == 1.0 ? true : false;
 
-		if (allowTrucks && r <= t) {
+		double randomValue=0.0;
+		if (p>q)
+		{
+			if(allowTrucks){
+			randomValue = 0.01 + (p - 0.01) * Random.get().nextDouble();
+			}
+			else
+			{
+			randomValue = q + (p - q) * Random.get().nextDouble();
+			}
+		}
+		else if(q<p)
+		{
+			if(allowTrucks)
+			{
+				randomValue = 0.01 + (q - 0.01) * Random.get().nextDouble();
+			}
+			else
+			{
+			randomValue = p + (q - p) * Random.get().nextDouble();
+			}
+		}
+		else
+		{
+			randomValue = 0.01 + (q - 0.01) * Random.get().nextDouble();
+		}
+				
+		if (allowTrucks && randomValue <= t) {
 			Vehicle vehicle = new Truck();
 			Customer customer = new Customer(true);
 			person = new Person(customer, vehicle, 0);
-			return person;
 		}
-		if (p == q) {
+		 if (allowTrucks && p.equals(t) && randomValue <= t) {
+			int r2 = Random.get().nextInt(4);
+			if (r2 == 0) {
+				Vehicle vehicle = new SmallCar();
+				Customer customer = new Customer(true);
+				person = new Person(customer, vehicle, 0);
+			} else if (r2 == 1) {
+				Vehicle vehicle = new Motorbike();
+				Customer customer = new Customer(true);
+				person = new Person(customer, vehicle, 0);
+			} else if (r2 == 2) {
+				Vehicle vehicle = new Truck();
+				Customer customer = new Customer(true);
+				person = new Person(customer, vehicle, 0);
+			}
+		}
+		 if (allowTrucks && q.equals(t) && randomValue <= t) {
+			int r2 = Random.get().nextInt(2);
+			if (r2 == 0) {
+				Vehicle vehicle = new Sedan();
+				Customer customer = new Customer(true);
+				person = new Person(customer, vehicle, 0);
+			} else if (r2 == 1) {
+				Vehicle vehicle = new Truck();
+				Customer customer = new Customer(true);
+				person = new Person(customer, vehicle, 0);
+			} 
+		}
+		 if (allowTrucks && p.equals(t)&& q.equals(t) && randomValue <= t) {
+				int r2 = Random.get().nextInt(4);
+				if (r2 == 0) {
+					Vehicle vehicle = new SmallCar();
+					Customer customer = new Customer(true);
+					person = new Person(customer, vehicle, 0);
+				} else if (r2 == 1) {
+					Vehicle vehicle = new Motorbike();
+					Customer customer = new Customer(true);
+					person = new Person(customer, vehicle, 0);
+				} else if (r2 == 2) {
+					Vehicle vehicle = new Truck();
+					Customer customer = new Customer(true);
+					person = new Person(customer, vehicle, 0);
+				}
+				else if (r2 == 3) {
+					Vehicle vehicle = new Sedan();
+					Customer customer = new Customer(true);
+					person = new Person(customer, vehicle, 0);
+				}
+			}
+		
+		else if (p.equals(q)) {
 			int r2 = Random.get().nextInt(4);
 			if (r2 == 0) {
 				Vehicle vehicle = new SmallCar();
@@ -123,30 +199,15 @@ public class Station {
 				Vehicle vehicle = new Sedan();
 				Customer customer = new Customer(true);
 				person = new Person(customer, vehicle, 0);
-			} else if (r2 == 3) {
+			} else if (r2 == 2) {
 				Vehicle vehicle = new Motorbike();
 				Customer customer = new Customer(true);
 				person = new Person(customer, vehicle, 0);
 			}
-			return person;
 		}
 
-		else {
-
-			person = null;
-			if (r > 0.05) {
-				r = r / 10;
-				while (r > 0.05) {
-					r = r - 0.01;
-				}
-
-			}
-			if (allowTrucks && r <= t) {
-				Vehicle vehicle = new Truck();
-				Customer customer = new Customer(true);
-				person = new Person(customer, vehicle, 0);
-			}
-			if (r <= p) {
+		else if (q>p) {		
+			 if (randomValue <= p) {
 				int r2 = Random.get().nextInt(3);
 				if (r2 == 0) {
 					Vehicle vehicle = new SmallCar();
@@ -158,14 +219,38 @@ public class Station {
 					person = new Person(customer, vehicle, 0);
 				}
 			}
-			if (r <= q) {
+			 else if (randomValue <= q) {
 				Vehicle vehicle = new Sedan();
-				Customer customer = new Customer(true);
-				person = new Person(customer, vehicle, 0);
+				Customer customer = new Customer(true);	
+				person = new Person(customer, vehicle, 0);				
 			}
-			return person;
-
 		}
+		else
+		{
+			  if (randomValue <= q) {
+				  
+				Vehicle vehicle = new Sedan();
+				Customer customer = new Customer(true);	
+				person = new Person(customer, vehicle, 0);
+				 
+			}
+			 if (randomValue <= p) {
+					int r2 = Random.get().nextInt(3);
+					if (r2 == 0) {
+						Vehicle vehicle = new SmallCar();
+						Customer customer = new Customer(true);
+						person = new Person(customer, vehicle, 0);
+					} else if (r2 == 1) {
+						Vehicle vehicle = new Motorbike();
+						Customer customer = new Customer(true);
+						person = new Person(customer, vehicle, 0);
+					}
+				}
+		}
+			if (person!=null){
+				System.out.println(person.toString());
+			}
+		return person;
 
 	}
 
@@ -267,8 +352,8 @@ public class Station {
 
 	public void tick() {
 		while (true) {
-		newCustomerArrive();
-		try { Ticker.getBarrier().await(); } catch (InterruptedException e) { System.out.println("ended"); } catch (BrokenBarrierException e) { System.out.println("ended"); }
+			newCustomerArrive();
+			try { Ticker.getBarrier().await(); } catch (InterruptedException e) { System.out.println("ended"); } catch (BrokenBarrierException e) { System.out.println("ended"); }
 		}
 	}
 
