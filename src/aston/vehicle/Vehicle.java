@@ -24,7 +24,7 @@ public abstract class Vehicle extends PersonAttribute {
 	protected double queueSize = 0.0;
 	
 	/**
-	 * Minimum size of the tank. If there is no range, this is the only size
+	 * Size of the tank
 	 */
 	protected double tankSize;
 	
@@ -88,6 +88,9 @@ public abstract class Vehicle extends PersonAttribute {
 	 */
 	public void incrementTank() {
 		this.tankLevel += 1;
+		if (this.tankLevel == this.tankSize) {
+			setFull(true);
+		}
 	}
 	
 	/**

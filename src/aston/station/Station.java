@@ -261,17 +261,7 @@ public class Station {
 	 *            the person who owns the vehicle
 	 */
 	public void joinPump(Person person) {
-		// getShortestQueue for pump and add vehicle
 		getShortestQueue(person.getVehicle()).queue.put(person.getVehicle());
-
-		// TODO Not required? Need to make sure
-
-		// if in front of queue start topping up
-		// if (person.getVehicle().tankFull()) {
-		// double bill = person.getVehicle().getTankSize() *
-		// (Double)Config.get("pricePerGallon");
-		// person.addToBill(bill);
-		// }
 	}
 
 	/**

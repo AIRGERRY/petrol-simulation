@@ -2,6 +2,7 @@ package aston.station;
 
 import java.util.concurrent.CyclicBarrier;
 
+import aston.person.PersonAttribute;
 import aston.resources.Config;
 import aston.vehicle.Vehicle;
 
@@ -15,10 +16,12 @@ import aston.vehicle.Vehicle;
  *
  */
 
-//TODO
-//Queue length method, to tell parent threads if this servicer is available for adding customers to
-
 public abstract class Servicer implements Runnable {
+	
+	/**
+	 * personAttribute for sharing between queues
+	 */
+	protected PersonAttribute personAttribute;
 	
 	/**
 	 * Holds the CyclicBarrier object for ticks

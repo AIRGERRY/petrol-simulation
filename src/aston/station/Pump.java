@@ -35,6 +35,9 @@ public class Pump extends Servicer {
 				if (currentVehicle != null) {
 					if (!currentVehicle.tankFull()) {
 						currentVehicle.incrementTank();
+						System.out.println("incrementing tank");
+					} else {
+						System.out.println("vehicle removed from queue");
 					}
 				}
 				this.barrier.await();
