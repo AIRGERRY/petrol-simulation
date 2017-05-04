@@ -13,7 +13,7 @@ import aston.resources.Config;
  * Graphical UI
  * 
  * @author Ollie, Gerard
- * @version 1.4
+ * @version 1.5
  * @since 8 Mar 2017
  *
  */
@@ -67,9 +67,6 @@ public class GUI {
 		tRadio1 = new JRadioButton("Till 1");
 		tRadio2 = new JRadioButton("Till 2");
 		tRadio3 = new JRadioButton("Till 4");
-		
-		
-		configButton.addActionListener((java.awt.event.ActionEvent event) -> saveConfig());
 		
 		//Level 2: Set properties.
 		priceEntry.setEditable(true);
