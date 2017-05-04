@@ -24,6 +24,7 @@ public class SmallCar extends Vehicle {
 		this.tankSize = (int)(tank.getLow() + (Random.get().nextInt((int)(tank.getHigh() - tank.getLow() + 1))));
 		this.queueSize = Config.get("smallcarSize");
 		this.happyTime = Config.get("smallcarHappyTime");
+		this.type = "SmallCar";
 	}
 	
 	public String toString() {

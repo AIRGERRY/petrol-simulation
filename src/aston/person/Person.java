@@ -1,12 +1,13 @@
 package aston.person;
 
+import aston.resources.Config;
 import aston.vehicle.Vehicle;
 
 /**
  * Person class
  * 
  * @author Gerard, Ollie, Mosope
- * @version 1.1
+ * @version 1.5
  * @since 9 Mar 2017
  *
  */
@@ -23,35 +24,36 @@ public class Person {
 	private Vehicle vehicle;
 
 	/**
-	 * Amount of time spent waiting at the queue.
+	 * Time left in till queue.
 	 */
-	private int spentWaiting;
+	private int timeLeft;
 
 	/**
-	 * Holds the bill to pay tills, this inludes the price of the fuel and the items bought at the shopping area
+	 * Holds the bill to pay tills, this includes the price of the fuel and the
+	 * items bought at the shopping area
 	 */
 	private double billToPay;
-	
+
 	/**
 	 * Constructor for {@code Person} class. Initialises class variables.
 	 */
 	public Person(Customer customer, Vehicle vehicle, int time) {
 		this.person = customer;
 		this.vehicle = vehicle;
-		this.spentWaiting = time;
 	}
 
-	
 	/**
 	 * Getter for {@code vehicle} field
+	 * 
 	 * @return the Vehicle object
 	 */
 	public Vehicle getVehicle() {
 		return vehicle;
 	}
-	
+
 	/**
 	 * Getter for {@code person} field
+	 * 
 	 * @return the Customer object.
 	 */
 	public Customer getCustomer() {
@@ -60,35 +62,39 @@ public class Person {
 
 	/**
 	 * Gets the number of time spent waiting at the queue.
+	 * 
 	 * @return The value of the amount spent waiting.
 	 */
-	public int timeSpent() {
-		return this.spentWaiting;
+	public int getTimeLeft() {
+		return this.timeLeft;
 	}
 
 	/**
-	 * Adds the value of {@code bill} to the total {@code blllToPay}
-	 * @param bill the amount that has been charged
+	 * Sets time left in till queue
+	 * 
+	 * @param timeLeft
 	 */
-	public void addToBill(double bill) {
-		billToPay += bill;
+	public void setTimeLeft(int timeLeft) {
+		this.timeLeft = timeLeft;
 	}
-	
-	
+
+	public void decrementTime() {
+		this.timeLeft -= 1;
+	}
+
 	/**
 	 * @return {@code billToPay} the total bill to pay
 	 */
-	public double getBill()
-	{
-		return billToPay;
+	public double getBill() {
+		return this.person.getMoneySpent() + (new Double(this.vehicle.getTankSize()) * (Double)Config.get("pricePerGallon"));
 	}
-	
+
 	public String toString() {
 		boolean status = person.isHappy();
-		if (status == false){
-			return "Unhappy Customer driving a " + vehicle.toString();
+		if (status == false) {
+			return "Unhappy customer driving a " + vehicle.toString();
 		}
-		return "happy Customer driving a " + vehicle.toString() ;
+		return "Happy customer driving a " + vehicle.toString();
 	}
 
 }

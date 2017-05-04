@@ -41,9 +41,9 @@ public class Config {
 
 		//Happytime
 		internalSet("motorbikeHappyTime", 0.0);
-		internalSet("smallcarHappyTime", 5.0);
-		internalSet("sedanHappyTime", 10.0);
-		internalSet("truckHappyTime", 8.0);
+		internalSet("smallcarHappyTime", 30.0);
+		internalSet("sedanHappyTime", 60.0);
+		internalSet("truckHappyTime", 48.0);
 
 		//Shopping price range
 		internalSet("smallcarShoppingPrice", new Range(5.0, 10.0));
@@ -56,10 +56,11 @@ public class Config {
 		internalSet("truckShoppingTime", new Range(4.0, 6.0));
 		
 		//Price per gallon
-		internalSet("pricePerGallon", 1.5);
+		internalSet("pricePerGallon", 1.2);
 		
 		//Shopping probability
-		internalSet("smallcarShopping", 0.3);
+		//internalSet("smallcarShopping", 0.3);
+		internalSet("smallcarShopping", 1.0);
 		internalSet("sedanShopping", 0.4);
 		internalSet("truckShopping", 1.0);
 		

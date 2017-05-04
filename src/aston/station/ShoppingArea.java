@@ -10,18 +10,26 @@ import java.util.Iterator;
  * ShoppingArea class for happy customers
  * 
  * @author Ollie, Mosope
- * @version 1.1
+ * @version 1.3
  * @since 14 Mar 2017
  *
  */
 
 public class ShoppingArea {
 	
+	private static ShoppingArea instance = null;
+	
 	private ArrayList<Person> persons;
 	
-	public ShoppingArea() {
+	private ShoppingArea() {
 		this.persons = new ArrayList<Person>();
-		
+	}
+	
+	public static ShoppingArea getInstance() {
+		if (instance == null) {
+			instance = new ShoppingArea();
+		}
+		return instance;
 	}
 	
 	public void tick() {
@@ -29,8 +37,7 @@ public class ShoppingArea {
 		while(personIterator.hasNext()) {
 			Person person = personIterator.next();
 			if (person.getCustomer().getTime() == 0) {
-				
-				Station.getInstance().joinTill(person);
+				ServicerHandler.getInstance().getShortestQueue().queue.put(person);
 				personIterator.remove();
 			} else {
 				person.getCustomer().decrementTime();
@@ -42,7 +49,7 @@ public class ShoppingArea {
 	 * Adds a {@link Customer} to the {@code customers} array
 	 * @param customer
 	 */
-	public void addToShoppingArea(Person person)
+	public void add(Person person)
 	{
 		persons.add(person);
 	}

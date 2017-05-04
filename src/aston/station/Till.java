@@ -1,5 +1,6 @@
 package aston.station;
 
+import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -31,10 +32,21 @@ public class Till extends Servicer {
 		while(true) {
 			try {
 				if (currentCustomer == null) {
-					currentCustomer = (Customer)this.queue.take();
+					this.person = this.queue.take();
+					if (this.person != null) {
+						currentCustomer = this.person.getCustomer();
+					}
 				}
 				if (currentCustomer != null) {
-					System.out.println("Customer found");
+					if (this.person.getTimeLeft() > 0) {
+						this.person.decrementTime();
+					} else {
+						Bill.addToBill(this.person.getBill());
+						Pump pump = ServicerHandler.getInstance().findPump(this.person);
+						pump.queue.removeNext();
+						pump.atTill = false;
+						this.queue.removeNext();
+					}
 				}
 				this.barrier.await();
 			} catch (InterruptedException e) {

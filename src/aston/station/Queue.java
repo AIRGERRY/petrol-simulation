@@ -1,8 +1,10 @@
 package aston.station;
 
+import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import aston.person.Customer;
+import aston.person.Person;
 import aston.person.PersonAttribute;
 import aston.vehicle.Vehicle;
 import aston.resources.Config;
@@ -18,16 +20,11 @@ import aston.resources.Log;
  */
 
 public class Queue {
-
-	/**
-	 * Customer Queue
-	 */
-	private ArrayBlockingQueue<Customer> cQueue;
 	
 	/**
 	 * Vehicle Queue
 	 */
-	private ArrayBlockingQueue<Vehicle> vQueue;
+	private ArrayBlockingQueue<Person> queue;
 
 	/**
 	 * Current level of vehicles in the queue, from queueSize constants
@@ -49,7 +46,7 @@ public class Queue {
 	 * @param maxLevel Longest queue available
 	 */
 	public Queue(double maxLevel) {
-		this.vQueue = new ArrayBlockingQueue<Vehicle>(4);
+		this.queue = new ArrayBlockingQueue<Person>(5);
 		this.maxLevel = maxLevel;
 		this.usingVehicle = true;
 	}
@@ -58,7 +55,7 @@ public class Queue {
 	 * Creates a customer queue
 	 */
 	public Queue() {
-		this.cQueue = new ArrayBlockingQueue<Customer>(10);
+		this.queue = new ArrayBlockingQueue<Person>(10);
 		this.usingVehicle = false;
 	}
 
@@ -67,14 +64,21 @@ public class Queue {
 	 * Will wait until an object is available in the queue to take
 	 * @return Either a Customer or Vehicle
 	 */
-	public PersonAttribute take() {
-		if (usingVehicle) {
-			Vehicle vehicle = this.vQueue.poll();
-			if (vehicle != null) { this.queueLevel -= vehicle.getQueueSize(); }
-			return vehicle;
-		} else {
-			Customer customer = this.cQueue.poll();
-			return customer;
+	public Person take() {
+		Person person = this.queue.peek();
+		return person;
+	}
+	
+	/**
+	 * Removes next item in queue after it has been peeked at by the previous method
+	 */
+	public void removeNext() {
+		Person person = this.queue.poll();
+		if (person != null) {
+			if (usingVehicle) {
+				Vehicle vehicle = person.getVehicle();
+				this.queueLevel -= vehicle.getQueueSize();
+			}
 		}
 	}
 
@@ -82,29 +86,23 @@ public class Queue {
 	 * Adds an object to the end of the queue, if there is space
 	 * @param attribute The object to add, either a Customer or a Vehicle
 	 */
-	public void put(PersonAttribute attribute) {
+	public void put(Person person) {
 		try {
+			Random random = new Random(((Double)Config.get("seed")).intValue());
+			int timeLeft = random.nextInt(13) + 6;
+			person.setTimeLeft(timeLeft);
 			if (usingVehicle) {
-				if (attribute instanceof Vehicle) {
-					Vehicle vehicle = (Vehicle)attribute;
+				Vehicle vehicle = person.getVehicle();
 					if ((this.queueLevel + vehicle.getQueueSize()) < (Double)Config.get("queueCapacity")) {
-						this.vQueue.put(vehicle);
+						this.queue.put(person);
 						this.queueLevel += vehicle.getQueueSize();
 						System.out.println(vehicle.toString() + " added to pump");
 					}
-				} else {
-					Log.log("Using vehicle, but a vehicle was not submitted to the queue", 3);
-				}
 			} else {
-				if (attribute instanceof Customer) {
-					Customer customer = (Customer)attribute;
-					this.cQueue.put(customer);
-				} else {
-					Log.log("Using customer, but a customer was not submitted to the queue", 3);
-				}
+				this.queue.put(person);
 			}
 		} catch (InterruptedException ex) {
-			Log.log("Adding attribute to queue was interrupted", 3);
+			Log.log("Adding person to queue was interrupted", 3);
 		}
 
 	}
@@ -122,7 +120,7 @@ public class Queue {
 	 * @return
 	 */
 	public boolean hasSpace() {
-		return (this.cQueue.remainingCapacity() > this.cQueue.size());
+		return (this.queue.remainingCapacity() > this.queue.size());
 	}
 	
 	/**
@@ -131,6 +129,13 @@ public class Queue {
 	 */
 	public double freeSpace() {
 		return (this.maxLevel - this.queueLevel);
+	}
+	
+	/**
+	 * 
+	 */
+	public double occupiedSpaces() {
+		return this.queue.size();
 	}
 
 }

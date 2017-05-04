@@ -2,6 +2,7 @@ package aston.station;
 
 import java.util.concurrent.CyclicBarrier;
 
+import aston.person.Person;
 import aston.person.PersonAttribute;
 import aston.resources.Config;
 import aston.vehicle.Vehicle;
@@ -21,7 +22,7 @@ public abstract class Servicer implements Runnable {
 	/**
 	 * personAttribute for sharing between queues
 	 */
-	protected PersonAttribute personAttribute;
+	protected Person person;
 	
 	/**
 	 * Holds the CyclicBarrier object for ticks
@@ -31,7 +32,7 @@ public abstract class Servicer implements Runnable {
 	/**
 	 * Holds the {@code queue} object containing the list and order of customer at the servicer
 	 */
-	protected Queue queue;
+	public Queue queue;
 	
 	/**
 	 * Running total for revenue taken by this servicer
@@ -88,6 +89,13 @@ public abstract class Servicer implements Runnable {
 	 */
 	public double freeSpace() {
 		return this.queue.freeSpace();
+	}
+	
+	/**
+	 * Size of queue
+	 */
+	public double occupiedSpaces() {
+		return this.queue.occupiedSpaces();
 	}
 	
 	/**

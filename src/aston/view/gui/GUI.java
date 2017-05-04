@@ -221,6 +221,7 @@ public class GUI {
 				tillCount = 4.0;
 			}
 			Config.set("tillCount", tillCount);
+			System.out.println("Price Per Gallon : " + ((Double)Config.get("pricePerGallon")));
 			Simulation.station = Station.getInstance();
 		}
 }

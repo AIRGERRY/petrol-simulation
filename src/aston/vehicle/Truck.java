@@ -22,6 +22,7 @@ public class Truck extends Vehicle {
 		this.tankSize = new Double((tank.getLow() + (Random.get().nextInt(new Double(tank.getHigh() - tank.getLow() + 1).intValue())))).intValue();
 		this.queueSize = Config.get("truckSize");
 		this.happyTime = Config.get("truckHappyTime");
+		this.type = "Truck";
 	}
 	
 	public String toString() {

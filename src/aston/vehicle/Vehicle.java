@@ -7,7 +7,7 @@ import aston.resources.Random;
  * Parent class defining the general fields for all vehicle classes.
  * 
  * @author Ollie, Mosope 
- * @version 1.4
+ * @version 2.0
  * @since 1 Mar 2017
  */
 
@@ -37,6 +37,11 @@ public abstract class Vehicle extends PersonAttribute {
 	 * Whether or not the tank is full
 	 */
 	private boolean isFull;
+	
+	/**
+	 * Vehicle type
+	 */
+	protected String type;
 	
 	/**
 	 * Holds time spent in the current queue
@@ -88,6 +93,7 @@ public abstract class Vehicle extends PersonAttribute {
 	 */
 	public void incrementTank() {
 		this.tankLevel += 1;
+		this.timeSpent += 1;
 		if (this.tankLevel == this.tankSize) {
 			setFull(true);
 		}
@@ -108,6 +114,20 @@ public abstract class Vehicle extends PersonAttribute {
 	public void setFull(boolean b)
 	{
 		isFull = b;
+	}
+	
+	/**
+	 * Returns whether or not a customer is happy with their queue time
+	 */
+	public boolean isHappy() {
+		return (this.timeSpent <= this.happyTime);
+	}
+	
+	/**
+	 * Vehicle type
+	 */
+	public String getType() {
+		return this.type;
 	}
 	
 	/**

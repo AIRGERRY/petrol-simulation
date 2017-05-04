@@ -27,10 +27,22 @@ public class Customer extends PersonAttribute {
 	private int timeSpent;
 	
 	/**
+	 * Money spent in shoppingArea
+	 */
+	private int moneySpent;
+	
+	/**
 	 * Constructor for Customer class. Initialises class variables.
 	 */
 	public Customer(boolean bool) {
 		happy = bool;
+	}
+	
+	/**
+	 * Set customer mood
+	 */
+	public void setHappy(boolean happy) {
+		this.happy = happy;
 	}
 
 	/**
@@ -39,6 +51,18 @@ public class Customer extends PersonAttribute {
 	 */
 	public boolean isHappy() {
 		return happy;
+	}
+	
+	public int getMoneySpent() {
+		return this.moneySpent;
+	}
+	
+	public void setMoneySpent(int moneySpent) {
+		this.moneySpent = moneySpent;
+	}
+	
+	public void setTime(int time) {
+		this.timeLeft = time;
 	}
 	
 	public int getTime() {

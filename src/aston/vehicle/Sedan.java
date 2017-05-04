@@ -24,6 +24,7 @@ public class Sedan extends Vehicle {
 		this.tankSize = (int)(tank.getLow() + (Random.get().nextInt((int)(tank.getHigh() - tank.getLow() + 1))));
 		this.queueSize = Config.get("sedanSize");
 		this.happyTime = Config.get("sedanHappyTime");
+		this.type = "Sedan";
 	}
 	
 	public String toString() {

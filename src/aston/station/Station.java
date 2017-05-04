@@ -25,15 +25,6 @@ import aston.vehicle.Vehicle;
 
 public class Station {
 
-	Integer tillCount = ((Double) Config.get("tillCount")).intValue();
-	Integer pumpCount = ((Double) Config.get("pumpCount")).intValue();
-
-	private Till[] tills = new Till[tillCount];
-	private Pump[] pumps = new Pump[pumpCount];
-	private ShoppingArea shoppingArea = new ShoppingArea();
-	private double moneyEarned = 0;
-	private double moneyLost = 0;
-
 	/**
 	 * Singleton instance of Station class
 	 */
@@ -44,14 +35,7 @@ public class Station {
 	 */
 	private Station() {
 		System.out.println("Station started");
-		for (int i = 0; i < tillCount; i++) {
-			tills[i] = new Till(Ticker.getBarrier());
-			new Thread(tills[i]).start();
-		}
-		for (int i = 0; i < pumpCount; i++) {
-			pumps[i] = new Pump(Ticker.getBarrier());
-			new Thread(pumps[i]).start();
-		}
+		ServicerHandler.getInstance();
 		tick();
 	}
 
@@ -70,23 +54,13 @@ public class Station {
 	public void newCustomerArrive() {
 		Person person = createPerson();
 		if (person != null) {
-			if (getShortestQueue(person.getVehicle()) == null) {
-				// todo
-				System.out.println("No space, customer turns away");
-				double bill = 0.0;
-				bill = person.getVehicle().getTankSize() * (double) Config.get("pricePerGallon");
-				moneyLost += bill;
+			if (ServicerHandler.getInstance().getShortestQueue(person.getVehicle()) == null) {
+				System.out.println("No space in any queues, customer turns away");
+				Double bill = 0.0;
+				bill = new Double(person.getVehicle().getTankSize()) * (Double)Config.get("pricePerGallon");
+				Bill.addToLost(bill);
 			} else {
 				joinPump(person);
-
-				// if (person.getCustomer().isHappy() && (person.getVehicle()
-				// instanceof Motorbike))
-				// {
-				// joinShoppingArea(person);
-				// }
-				// else
-				// {
-				// joinTill(person);
 			}
 
 		}
@@ -247,9 +221,6 @@ public class Station {
 					}
 				}
 		}
-			if (person!=null){
-				System.out.println(person.toString());
-			}
 		return person;
 
 	}
@@ -261,128 +232,14 @@ public class Station {
 	 *            the person who owns the vehicle
 	 */
 	public void joinPump(Person person) {
-		getShortestQueue(person.getVehicle()).queue.put(person.getVehicle());
-	}
-
-	/**
-	 * Adds a happy customer to the Shopingarea
-	 * 
-	 * @param person
-	 *            the person who is the customer
-	 * 
-	 */
-	public void joinShoppingArea(Person person) {
-		if (person.getCustomer().isHappy()) {
-			shoppingArea.addToShoppingArea(person);
-			double bill = 0;
-			Range range = new Range(0.0, 0.0);
-			if (person.getVehicle() instanceof SmallCar) {
-				range = Config.get("smallcarShoppingPrice");
-			} else if (person.getVehicle() instanceof Sedan) {
-				range = Config.get("sedanShoppingPrice");
-			} else if (person.getVehicle() instanceof Truck) {
-				range = Config.get("truckShoppingPrice");
-			}
-			bill = range.getLow() + (Random.get().nextInt((int) (range.getHigh() - range.getLow() + 1)));
-			person.addToBill(bill);
-		}
-	}
-
-	/**
-	 * Adds a customer to a Till
-	 * 
-	 * @param person
-	 *            the person who is the customer to add to a till
-	 */
-	public void joinTill(Person person) {
-		// getShortestQueue for till and add customer
-
-		// getShortestQueue(false).queue.put(person.getCustomer());
-		// if in front
-		moneyEarned += person.getBill();
-		for (int i = 0; i < pumps.length; i++) {
-			pumps[i].queue.take();
-		}
-
-	}
-
-	/**
-	 * Gets the shortest Pump/Till
-	 * 
-	 * @param pump
-	 *            whether it checks Pump or Till. <code>true</code> will check
-	 *            shortest Pump queue, <code>false</code> will check the
-	 *            shortest Till queue
-	 * @return {@link Servicer} The shortest Pump/Till
-	 */
-	public Pump getShortestQueue(Vehicle vehicle) {
-		Pump shortestPump = pumps[0];
-		for (int i = 1; i < pumps.length; i++) {
-			Pump newPump = pumps[i];
-			if (newPump.freeSpace() > shortestPump.freeSpace()) {
-				shortestPump = pumps[i];
-			}
-		}
-		if (shortestPump.hasSpace(vehicle)) {
-			return shortestPump;
-		} else {
-			return null;
-		}
-	}
-
-	public Till getShortestQueue() {
-		Till shortestTill = tills[0];
-		for (int i = 0; i < tills.length; i++) {
-			if (tills[i].freeSpace() < shortestTill.freeSpace()) {
-				shortestTill = tills[i];
-			}
-		}
-		return shortestTill;
-	}
+		ServicerHandler.getInstance().getShortestQueue(person.getVehicle()).queue.put(person);
+	}	
 
 	public void tick() {
 		while (true) {
 			newCustomerArrive();
 			try { Ticker.getBarrier().await(); } catch (InterruptedException e) { System.out.println("ended"); } catch (BrokenBarrierException e) { System.out.println("ended"); }
 		}
-	}
-
-	/**
-	 * Getter for money earned
-	 * 
-	 * @return moneyEarned the money earned by the station
-	 */
-	public double getMoneyEarned() {
-		return moneyEarned;
-	}
-
-	/**
-	 * Getter for money lost
-	 * 
-	 * @return moneyLost the money lost due to missed sales
-	 */
-	public double getMoneyLost() {
-		return moneyLost;
-	}
-
-	/**
-	 * Adds money to the amount of money earned by the station
-	 * 
-	 * @param money
-	 *            the amount of money for made sales
-	 */
-	public void addToMoneyEarned(double money) {
-		moneyEarned += money;
-	}
-
-	/**
-	 * Adds money to the amount of money lost by the station
-	 * 
-	 * @param money
-	 *            the amount of money lost due to missed sales
-	 */
-	public void addToMoneyLost(double money) {
-		moneyLost += money;
 	}
 
 }
