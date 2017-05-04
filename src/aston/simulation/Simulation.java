@@ -22,57 +22,18 @@ public class Simulation {
 	public static Station station = null;
 
 	public static void main(String args[]) {
-		//Station station = Station.getInstance();
-		//		System.out.println("Simulator initialised");
-		//		
-		//		System.out.println(new Motorbike().toString());
-		//		System.out.println(new Motorbike().toString());
-		//		System.out.println(new Motorbike().toString());
-		//		System.out.println(new Motorbike().toString());
-		//		
-		//		System.out.println(new Sedan().toString());
-		//		System.out.println(new Sedan().toString());
-		//		System.out.println(new Sedan().toString());
-		//		System.out.println(new Sedan().toString());
-		//		
-		//		System.out.println(new SmallCar().toString());
-		//		System.out.println(new SmallCar().toString());
-		//		System.out.println(new SmallCar().toString());
-		//		System.out.println(new SmallCar().toString());
-		//		
-		//		System.out.println(new Truck().toString());
-		//		System.out.println(new Truck().toString());
-		//		System.out.println(new Truck().toString());
-		//		System.out.println(new Truck().toString());
-		//		
-		//		for (int i=0; i <70; i++)
-		//		{
-		//			station.newCustomerArrive();
-		//		}
-		//		
-
-		
-
-		//Fuel and Shoping bill test
-		/*System.out.println("\n Shopping bill test"+"\n"+"-----");
-		for (int i=0; i<20; i++)
-		{
-			Person p1 = station.createPerson();
-			if(p1 != null)
-			{
-				System.out.println(p1.toString());
-				p1.getVehicle().setFull(true);
-				station.joinPump(p1);
-				System.out.println("fuel bill to pay: "+p1.getBill());
-				station.joinShoppingArea(p1);
-				System.out.println("fuel and shopping bill to pay: "+p1.getBill());
-				station.addToMoneyEarned(p1.getBill());
-				System.out.println("Total money earned by Station: "+station.getMoneyEarned());
-				System.out.println("--\n");
-			}
-		}*/
-		
-		final GUI start = new GUI(); 
+		if (args.length == 0) {
+			final GUI start = new GUI(); 
+		} else if (args.length == 5) {
+			Config.set("p", args[0]);
+			Config.set("q", args[1]);
+			Config.set("pumpCount", args[2]);
+			Config.set("tillCount", args[3]);
+			Config.set("allowTrucks", args[4]);
+			Simulation.station = Station.getInstance();
+		} else {
+			System.out.println("Incorrect arguments supplied. p, q, pumps, tills, trucks");
+		}
 	}
 	
 	public static void end() {

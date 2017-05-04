@@ -96,13 +96,13 @@ public class Queue {
 					if ((this.queueLevel + vehicle.getQueueSize()) < (Double)Config.get("queueCapacity")) {
 						this.queue.put(person);
 						this.queueLevel += vehicle.getQueueSize();
-						System.out.println(vehicle.toString() + " added to pump");
+						if (Config.prettyOutput) { System.out.println(vehicle.toString() + " added to pump"); }
 					}
 			} else {
 				this.queue.put(person);
 			}
 		} catch (InterruptedException ex) {
-			Log.log("Adding person to queue was interrupted", 3);
+			
 		}
 
 	}

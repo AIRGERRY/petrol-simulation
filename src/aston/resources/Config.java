@@ -17,6 +17,8 @@ public class Config {
 	
 	private static HashMap<String, Double> configDouble;
 	private static HashMap<String, Range> configRange;
+	
+	public static final boolean prettyOutput = false;
 		
 	private static Config instance = null;
 	
@@ -59,8 +61,7 @@ public class Config {
 		internalSet("pricePerGallon", 1.2);
 		
 		//Shopping probability
-		//internalSet("smallcarShopping", 0.3);
-		internalSet("smallcarShopping", 1.0);
+		internalSet("smallcarShopping", 0.3);
 		internalSet("sedanShopping", 0.4);
 		internalSet("truckShopping", 1.0);
 		
@@ -78,7 +79,7 @@ public class Config {
 		internalSet("allowTrucks", 1.0);
 		
 		//Seed
-		internalSet("seed", 420.0);
+		internalSet("seed", 25.0);
 	}
 	
 	private static Config getInstance() {

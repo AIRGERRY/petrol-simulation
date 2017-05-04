@@ -2,9 +2,12 @@ package aston.station;
 
 import aston.person.Customer;
 import aston.person.Person;
+import aston.resources.Ticker;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * ShoppingArea class for happy customers
@@ -15,14 +18,16 @@ import java.util.Iterator;
  *
  */
 
-public class ShoppingArea {
+public class ShoppingArea implements Runnable {
 	
 	private static ShoppingArea instance = null;
 	
+	private ArrayList<Person> newPersons;
 	private ArrayList<Person> persons;
 	
 	private ShoppingArea() {
 		this.persons = new ArrayList<Person>();
+		this.newPersons = new ArrayList<Person>();
 	}
 	
 	public static ShoppingArea getInstance() {
@@ -32,17 +37,33 @@ public class ShoppingArea {
 		return instance;
 	}
 	
-	public void tick() {
-		Iterator<Person> personIterator = persons.iterator();
-		while(personIterator.hasNext()) {
-			Person person = personIterator.next();
-			if (person.getCustomer().getTime() == 0) {
-				ServicerHandler.getInstance().getShortestQueue().queue.put(person);
-				personIterator.remove();
-			} else {
-				person.getCustomer().decrementTime();
+	public void run() {
+		while (true) {
+			try {
+				persons.addAll(newPersons);
+				newPersons = new ArrayList<Person>();
+				Iterator<Person> personIterator = persons.iterator();
+				while(personIterator.hasNext()) {
+					Person person = personIterator.next();
+					if (person != null) {
+						if (person.getCustomer() != null) {
+							if (person.getCustomer().getTime() == 0) {
+								ServicerHandler.getInstance().getShortestQueue().queue.put(person);
+								personIterator.remove();
+							} else {
+								person.getCustomer().decrementTime();
+							}
+						}
+					}
+				}
+				Ticker.getBarrier().await();
+			} catch (InterruptedException e) {
+				System.out.println("ended");
+			} catch (BrokenBarrierException e) {
+				System.out.println("ended");
 			}
 		}
+		
 	}
 	
 	/**
@@ -51,7 +72,7 @@ public class ShoppingArea {
 	 */
 	public void add(Person person)
 	{
-		persons.add(person);
+		newPersons.add(person);
 	}
 	
 }

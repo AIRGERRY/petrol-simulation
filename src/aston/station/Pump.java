@@ -27,11 +27,9 @@ public class Pump extends Servicer {
 	public Pump(CyclicBarrier barrier) {
 		super((Double)Config.get("queueCapacity"));
 		this.barrier = barrier;
-		System.out.println("Pump initialised");
 	}
 	
 	public void run() {
-		System.out.println("Pump running");
 		while(true) {
 			try {
 				if (currentVehicle == null) {
@@ -54,7 +52,7 @@ public class Pump extends Servicer {
 								if (currentVehicle instanceof Motorbike) {
 									joinTill(person);
 								} else if (currentVehicle instanceof Sedan) {
-									if (goingToShoppingArea < (10 * ((Double)Config.get("sedanShopping")).intValue())) {
+									if (goingToShoppingArea < (10 * ((Double)Config.get("sedanShopping")))) {
 										person.getCustomer().setTime(random.nextInt(((Range)Config.get("sedanShoppingTime")).getHigh().intValue() * 6 + 1) + ((Range)Config.get("sedanShoppingTime")).getLow().intValue() * 6);
 										person.getCustomer().setMoneySpent(random.nextInt(((Range)Config.get("sedanShoppingPrice")).getHigh().intValue() + 1) + ((Range)Config.get("sedanShoppingPrice")).getLow().intValue());
 										joinShoppingArea(person);
@@ -62,7 +60,7 @@ public class Pump extends Servicer {
 										joinTill(person);
 									}
 								} else if (currentVehicle instanceof SmallCar) {
-									if (goingToShoppingArea < (10 * ((Double)Config.get("smallcarShopping")).intValue())) {
+									if (goingToShoppingArea < (10 * ((Double)Config.get("smallcarShopping")))) {
 										person.getCustomer().setTime(random.nextInt(((Range)Config.get("smallcarShoppingTime")).getHigh().intValue() * 6 + 1) + ((Range)Config.get("smallcarShoppingTime")).getLow().intValue() * 6);
 										person.getCustomer().setMoneySpent(random.nextInt(((Range)Config.get("smallcarShoppingPrice")).getHigh().intValue() + 1) + ((Range)Config.get("smallcarShoppingPrice")).getLow().intValue());
 										joinShoppingArea(person);
@@ -70,15 +68,24 @@ public class Pump extends Servicer {
 										joinTill(person);
 									}
 								} else if (currentVehicle instanceof Truck) {
-									if (goingToShoppingArea < (10 * ((Double)Config.get("truckShopping")).intValue())) {
+									if (goingToShoppingArea < (10 * ((Double)Config.get("truckShopping")))) {
 										person.getCustomer().setTime(random.nextInt(((Range)Config.get("truckShoppingTime")).getHigh().intValue() * 6 + 1) + ((Range)Config.get("truckShoppingTime")).getLow().intValue() * 6);
 										person.getCustomer().setMoneySpent(random.nextInt(((Range)Config.get("truckShoppingPrice")).getHigh().intValue() + 1) + ((Range)Config.get("truckShoppingPrice")).getLow().intValue());
+										Double t = ((Double)Config.get("t"));
+										t = t * 1.05;
+										if (t > 0.02) {
+											t = 0.02;
+										}
+										Config.set("t", t);
 										joinShoppingArea(person);
 									} else {
 										joinTill(person);
 									}
 								}
 							} else {
+								if (currentVehicle instanceof Truck) {
+									Config.set("t", ((Double)Config.get("t")) * 0.8);
+								}
 								joinTill(person);
 							}
 						}
@@ -96,12 +103,18 @@ public class Pump extends Servicer {
 	private void joinTill(Person person) {
 		Till till = ServicerHandler.getInstance().getShortestQueue();
 		till.queue.put(person);
-		System.out.println("Customer in a " + currentVehicle.toString() + " went to a till");
+		if (Config.prettyOutput) { System.out.println("Customer in a " + currentVehicle.toString() + " went to a till"); }
 	}
 	
 	private void joinShoppingArea(Person person) {
 		ShoppingArea.getInstance().add(person);
-		System.out.println("Customer in a " + currentVehicle.toString() + " went to the shopping area");
+		if (Config.prettyOutput) { System.out.println("Customer in a " + currentVehicle.toString() + " went to the shopping area"); }
+	}
+	
+	public void endTransaction() {
+		this.queue.removeNext();
+		this.atTill = false;
+		this.currentVehicle = null;
 	}
 
 }

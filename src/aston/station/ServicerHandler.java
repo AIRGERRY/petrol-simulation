@@ -33,6 +33,7 @@ public class ServicerHandler {
 			pumps[i] = new Pump(Ticker.getBarrier());
 			new Thread(pumps[i]).start();
 		}
+		new Thread(ShoppingArea.getInstance()).start();
 	}
 	
 	public static ServicerHandler getInstance() {

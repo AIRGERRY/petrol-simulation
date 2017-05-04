@@ -24,11 +24,9 @@ public class Till extends Servicer {
 	public Till(CyclicBarrier barrier) {
 		super();
 		this.barrier = barrier;
-		System.out.println("Till initialised");
 	}
 	
 	public void run() {
-		System.out.println("Till running");
 		while(true) {
 			try {
 				if (currentCustomer == null) {
@@ -43,9 +41,10 @@ public class Till extends Servicer {
 					} else {
 						Bill.addToBill(this.person.getBill());
 						Pump pump = ServicerHandler.getInstance().findPump(this.person);
-						pump.queue.removeNext();
-						pump.atTill = false;
+						pump.endTransaction();
 						this.queue.removeNext();
+						currentCustomer = null;
+						this.person = null;
 					}
 				}
 				this.barrier.await();

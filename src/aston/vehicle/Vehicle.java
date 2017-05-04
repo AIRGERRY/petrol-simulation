@@ -120,7 +120,8 @@ public abstract class Vehicle extends PersonAttribute {
 	 * Returns whether or not a customer is happy with their queue time
 	 */
 	public boolean isHappy() {
-		return (this.timeSpent <= this.happyTime);
+		boolean test = (this.timeSpent <= this.happyTime);
+		return test;
 	}
 	
 	/**

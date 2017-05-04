@@ -30,8 +30,6 @@ public class Bill {
 	
 	public static void addToBill(Double amount) {
 		getInstance().bill += amount;
-		System.out.println("+ £" + amount.toString());
-		System.out.println("R= £" + getBill().toString());
 	}
 	
 	public static Double getBill() {
@@ -47,8 +45,6 @@ public class Bill {
 	
 	public static void addToLost(Double amount) {
 		getInstance().lost += amount;
-		System.out.println("- £" + amount.toString());
-		System.out.println("L= £" + getLost().toString());
 	}
 	
 	public static Double getLost() {

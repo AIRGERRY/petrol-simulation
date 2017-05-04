@@ -34,7 +34,6 @@ public class Station {
 	 * Should only be called from getInstance method
 	 */
 	private Station() {
-		System.out.println("Station started");
 		ServicerHandler.getInstance();
 		tick();
 	}
@@ -55,7 +54,7 @@ public class Station {
 		Person person = createPerson();
 		if (person != null) {
 			if (ServicerHandler.getInstance().getShortestQueue(person.getVehicle()) == null) {
-				System.out.println("No space in any queues, customer turns away");
+				if (Config.prettyOutput) { System.out.println("No space in any queues, customer turns away"); }
 				Double bill = 0.0;
 				bill = new Double(person.getVehicle().getTankSize()) * (Double) Config.get("pricePerGallon");
 				Bill.addToLost(bill);
