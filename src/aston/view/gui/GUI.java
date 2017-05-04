@@ -13,7 +13,7 @@ import aston.resources.Config;
  * Graphical UI
  * 
  * @author Ollie, Gerard
- * @version 1.5
+ * @version 1.4
  * @since 8 Mar 2017
  *
  */
@@ -34,8 +34,6 @@ public class GUI {
 	private JRadioButton tRadio2;
 	private JRadioButton tRadio3;
 	
-	private JTextArea tarea;
-	
 	//Default values for parameters.
 	private int max = 5; //Maximum probability of 0.5.
 	private int min = 1; //Probability cannot go below 0.1.
@@ -50,10 +48,10 @@ public class GUI {
 		//Level 1: Created necessary components.
 		pSlider = new LabelledSlider("p: ", min, max, defaultValue);
 		qSlider = new LabelledSlider("q: ", min, max, defaultValue);
-		final JLabel priceLabel = new JLabel ("Price of Gallon: Â£");
-		final JLabel timeLabel = new JLabel (" Running Time: ");
-		priceEntry = new JTextField ("1.20", 8);
-		timeEntry = new JTextField("1440", 8);
+		final JLabel priceLabel = new JLabel ("Price of Gallon: £");
+		final JLabel timeLabel = new JLabel ("Running Time: ");
+		priceEntry = new JTextField (9);
+		timeEntry = new JTextField(9);
 		allowTrucks = new JCheckBox("Include Trucks?");
 		
 		final JButton configButton = new JButton("Configure");
@@ -68,11 +66,12 @@ public class GUI {
 		tRadio2 = new JRadioButton("Till 2");
 		tRadio3 = new JRadioButton("Till 4");
 		
+		
+		configButton.addActionListener((java.awt.event.ActionEvent event) -> saveConfig());
+		
 		//Level 2: Set properties.
 		priceEntry.setEditable(true);
 		timeEntry.setEditable(true);
-		pRadio3.setSelected(true);
-		tRadio3.setSelected(true);
 		
 		//Level 3: Create containers (panels).
 		mainFrame = new JFrame("Petrol-Simulation");
@@ -103,12 +102,8 @@ public class GUI {
 		priceTime.setLayout(new BorderLayout());
 		pumpLabel.setLayout(new FlowLayout());
 		radioPanel.setLayout(new BorderLayout());
-		
-		chBox.setBorder(BorderFactory.createRaisedSoftBevelBorder());
-		entryPanel.setBorder(BorderFactory.createRaisedSoftBevelBorder());
-		centerPanel.setBorder(BorderFactory.createRaisedSoftBevelBorder());
-		bottomPanel.setBorder(BorderFactory.createRaisedSoftBevelBorder());
-		slidersPanel.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+		pricePanel.setBorder(BorderFactory.createEtchedBorder());
+		timePanel.setBorder(BorderFactory.createEtchedBorder());
 		
 		//Level 5: Add components to panels
 		slidersPanel.add(pSlider);
@@ -124,7 +119,6 @@ public class GUI {
 		priceTime.add(timePanel, BorderLayout.EAST);
 		
 		entryPanel.add(priceTime);
-		chBox.add(allowTrucks);
 		
 		topPanel.add(slidersPanel, BorderLayout.NORTH);
 		topPanel.add(entryPanel, BorderLayout.CENTER);
@@ -227,67 +221,7 @@ public class GUI {
 				tillCount = 4.0;
 			}
 			Config.set("tillCount", tillCount);
-			System.out.println("p : " + ((Double)Config.get("p")));
-			System.out.println("q : " + ((Double)Config.get("q")));
 			Simulation.station = Station.getInstance();
-		}
-	
-		private void configButton() {
-			final int blankSpace = 6;
-			final String scrollFrameString = "ScrollFrame";
-			
-			// Step 1: create the components
-			tarea = new JTextArea();
-			final JScrollPane scroller = new JScrollPane(tarea);
-			final JButton quit = new JButton("Close");
-			final JButton display = new JButton("Display");
-			
-			// Step 2: set properties
-			tarea.setEditable(false);
-			tarea.setLineWrap(true);
-		    	scroller.setPreferredSize(new Dimension(700, 600));
-		    	scroller.setMinimumSize(new Dimension(400,400));
-			
-		    	// Step 3: Create containers
-			final JFrame scrollFrame = new JFrame("Petrol-Simulation");
-			scrollFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			quit.putClientProperty(scrollFrameString, scrollFrame);
-			
-			JPanel topPanel = new JPanel();
-			JPanel bottomPanel = new JPanel();
-			JPanel commandBox = new JPanel();
-			
-			// Step 4: Specify LayoutManagers
-			scrollFrame.setLayout(new BorderLayout());
-			((JPanel)scrollFrame.getContentPane()).setBorder(new 
-					EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
-			
-			// Step 5: Add components to panels
-			topPanel.add(scroller, BorderLayout.NORTH);
-			commandBox.add(display, BorderLayout.EAST);
-			commandBox.add(quit, BorderLayout.WEST);
-			bottomPanel.add(commandBox, BorderLayout.SOUTH);
-			
-			scrollFrame.add(topPanel, BorderLayout.NORTH);
-			scrollFrame.add(bottomPanel, BorderLayout.SOUTH);
-			
-			// Step 6: add listeners
-			display.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					display.addActionListener((java.awt.event.ActionEvent event) -> saveConfig());
-				}
-			});
-			
-			quit.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					JComponent c = (JComponent) e.getSource();
-					JFrame f = (JFrame) c.getClientProperty(scrollFrameString);
-					f.dispose();
-				}
-			});
-			// Step 7: show the GUI
-			scrollFrame.pack();
-			scrollFrame.setVisible(true);
 		}
 }
 
