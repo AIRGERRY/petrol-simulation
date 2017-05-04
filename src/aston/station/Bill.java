@@ -35,7 +35,14 @@ public class Bill {
 	}
 	
 	public static Double getBill() {
-		return getInstance().bill;
+		Double amount = getInstance().bill;
+		Integer intval = amount.intValue();
+		Double diff = amount - intval;
+		diff = diff * 10;
+		Long nearest = Math.round(diff);
+		diff = new Double(nearest) / 10.0;
+		amount = intval + diff;
+		return amount;
 	}
 	
 	public static void addToLost(Double amount) {
@@ -45,7 +52,14 @@ public class Bill {
 	}
 	
 	public static Double getLost() {
-		return getInstance().lost;
+		Double amount = getInstance().lost;
+		Integer intval = amount.intValue();
+		Double diff = amount - intval;
+		diff = diff * 10;
+		Long nearest = Math.round(diff);
+		diff = new Double(nearest) / 10.0;
+		amount = intval + diff;
+		return amount;
 	}
 
 }

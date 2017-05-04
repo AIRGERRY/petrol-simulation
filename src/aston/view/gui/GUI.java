@@ -200,8 +200,8 @@ public class GUI {
 		private void saveConfig() {
 			Config.set("pricePerGallon", Double.parseDouble(priceEntry.getText()));
 			Config.set("totalTicks", Double.parseDouble(timeEntry.getText()));
-			Config.set("p", new Double(pSlider.getValue()));
-			Config.set("q", new Double(qSlider.getValue()));
+			Config.set("p", new Double(pSlider.getValue() / 100.0));
+			Config.set("q", new Double(qSlider.getValue() / 100.0));
 			Config.set("allowTrucks", new Double(allowTrucks.isSelected()?1.0:0.0));
 			Double pumpCount = 0.0;
 			if(pRadio1.isSelected()) {
@@ -221,7 +221,8 @@ public class GUI {
 				tillCount = 4.0;
 			}
 			Config.set("tillCount", tillCount);
-			System.out.println("Price Per Gallon : " + ((Double)Config.get("pricePerGallon")));
+			System.out.println("p : " + ((Double)Config.get("p")));
+			System.out.println("q : " + ((Double)Config.get("q")));
 			Simulation.station = Station.getInstance();
 		}
 }
