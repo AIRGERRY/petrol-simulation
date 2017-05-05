@@ -13,7 +13,7 @@ import aston.resources.Config;
  * Graphical UI
  * 
  * @author Ollie, Gerard
- * @version 1.4
+ * @version 1.5
  * @since 8 Mar 2017
  *
  */
@@ -48,7 +48,7 @@ public class GUI {
 		//Level 1: Created necessary components.
 		pSlider = new LabelledSlider("p: ", min, max, defaultValue);
 		qSlider = new LabelledSlider("q: ", min, max, defaultValue);
-		final JLabel priceLabel = new JLabel ("Price of Gallon: £");
+		final JLabel priceLabel = new JLabel ("Price of Gallon: Â£");
 		final JLabel timeLabel = new JLabel ("Running Time: ");
 		priceEntry = new JTextField (9);
 		timeEntry = new JTextField(9);
@@ -66,6 +66,15 @@ public class GUI {
 		tRadio2 = new JRadioButton("Till 2");
 		tRadio3 = new JRadioButton("Till 4");
 		
+		final ButtonGroup group1 = new ButtonGroup();
+		group1.add(pRadio1);
+		group1.add(pRadio2);
+		group1.add(pRadio3);
+		
+		final ButtonGroup group2 = new ButtonGroup();
+		group2.add(tRadio1);
+		group2.add(tRadio2);
+		group2.add(tRadio3);
 		
 		configButton.addActionListener((java.awt.event.ActionEvent event) -> saveConfig());
 		
