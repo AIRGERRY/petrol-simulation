@@ -2,10 +2,12 @@ package aston.resources;
 
 import java.util.concurrent.CyclicBarrier;
 
+import aston.person.Person;
 import aston.simulation.Simulation;
 import aston.station.Bill;
 import aston.station.Pump;
 import aston.station.ServicerHandler;
+import aston.station.ShoppingArea;
 import aston.station.Station;
 import aston.station.Till;
 
@@ -102,6 +104,14 @@ public class Ticker {
 						}
 					}
 					System.out.println(tillString);
+					System.out.println("");
+					System.out.println("SHOPPING AREA");
+					for (Person person : ShoppingArea.getInstance().getPersons()) {
+						System.out.println("|    " + person.getVehicle().toString() + " in shopping area.");
+					}
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
 					System.out.println("");
 				}
 			}

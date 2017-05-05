@@ -75,4 +75,8 @@ public class ShoppingArea implements Runnable {
 		newPersons.add(person);
 	}
 	
+	public ArrayList<Person> getPersons() {
+		return this.persons;
+	}
+	
 }
