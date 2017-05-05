@@ -18,7 +18,7 @@ public class Config {
 	private static HashMap<String, Double> configDouble;
 	private static HashMap<String, Range> configRange;
 	
-	public static final boolean prettyOutput = false;
+	public static final boolean prettyOutput = true;
 		
 	private static Config instance = null;
 	

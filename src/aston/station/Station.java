@@ -53,6 +53,7 @@ public class Station {
 	public void newCustomerArrive() {
 		Person person = createPerson();
 		if (person != null) {
+			if (Config.prettyOutput) { System.out.println(person.getVehicle().toString()+" arrived at station"); }
 			if (ServicerHandler.getInstance().getShortestQueue(person.getVehicle()) == null) {
 				if (Config.prettyOutput) { System.out.println("No space in any queues, customer turns away"); }
 				Double bill = 0.0;

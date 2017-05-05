@@ -112,7 +112,7 @@ public class Queue {
 	 * @return Boolean Whether there is space or not
 	 */
 	public boolean hasSpace(Vehicle vehicle) {
-		return ((this.queueLevel + vehicle.getQueueSize()) < this.maxLevel);
+		return ((this.queueLevel + vehicle.getQueueSize()) <= this.maxLevel);
 	}
 	
 	/**
