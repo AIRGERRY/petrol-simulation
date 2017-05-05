@@ -13,7 +13,7 @@ import aston.resources.Config;
  * Graphical UI
  * 
  * @author Ollie, Gerard
- * @version 1.4
+ * @version 1.5
  * @since 8 Mar 2017
  *
  */
