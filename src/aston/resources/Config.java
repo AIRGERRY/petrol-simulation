@@ -38,7 +38,7 @@ public class Config {
 		//Queue sizes
 		internalSet("motorbikeSize", 0.75);
 		internalSet("smallcarSize", 1.0);
-		internalSet("sedanSize", 1.0);
+		internalSet("sedanSize", 1.5);
 		internalSet("truckSize", 2.0);
 
 		//Happytime
