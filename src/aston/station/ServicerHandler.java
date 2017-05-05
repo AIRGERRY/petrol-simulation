@@ -98,4 +98,22 @@ public class ServicerHandler {
 	public Till[] getTills() {
 		return this.tills;
 	}
+	
+	public boolean allEmpty() {
+		int nonEmptyCount = 0;
+		for (int i = 0; i < pumpCount; i++) {
+			if (!pumps[i].queue.isEmpty()) {
+				nonEmptyCount += 1;
+			}
+		}
+		for (int i = 0; i < tillCount; i++) {
+			if (!tills[i].queue.isEmpty()) {
+				nonEmptyCount += 1;
+			}
+		}
+		if (!ShoppingArea.getInstance().isEmpty()) {
+			nonEmptyCount += 1;
+		}
+		return (nonEmptyCount == 0);
+	}
 }

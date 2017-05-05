@@ -30,7 +30,7 @@ public class Bill {
 	
 	public static void addToBill(Double amount) {
 		getInstance().bill += amount;
-		System.out.println("+ £" + amount);
+		//System.out.println("+ £" + amount);
 	}
 	
 	public static Double getBill() {

@@ -29,6 +29,8 @@ public class Station {
 	 * Singleton instance of Station class
 	 */
 	private static Station instance = null;
+	
+	private static boolean generate = true;
 
 	/**
 	 * Should only be called from getInstance method
@@ -44,6 +46,10 @@ public class Station {
 		}
 		return instance;
 	}
+	
+	public static void stopGeneration() {
+		generate = false;
+	}
 
 	/**
 	 * Creates a new {@code Person} object and adds it to a {@code Pump} if
@@ -51,19 +57,21 @@ public class Station {
 	 * {@code Till} when done
 	 */
 	public void newCustomerArrive() {
-		Person person = createPerson();
-		if (person != null) {
-			if (Config.prettyOutput) { System.out.println(person.getVehicle().toString()+" arrived at station"); }
-			Pump shortestPump = ServicerHandler.getInstance().getShortestQueue(person.getVehicle());
-			if (shortestPump == null) {
-				if (Config.prettyOutput) { System.out.println("No space in any queues, customer turns away"); }
-				Double bill = 0.0;
-				bill = new Double(person.getVehicle().getTankSize()) * (Double) Config.get("pricePerGallon");
-				Bill.addToLost(bill);
-			} else {
-				joinPump(shortestPump, person);
-			}
+		if (generate) {
+			Person person = createPerson();
+			if (person != null) {
+				if (Config.prettyOutput) { System.out.println(person.getVehicle().toString()+" arrived at station"); }
+				Pump shortestPump = ServicerHandler.getInstance().getShortestQueue(person.getVehicle());
+				if (shortestPump == null) {
+					if (Config.prettyOutput) { System.out.println("No space in any queues, customer turns away"); }
+					Double bill = 0.0;
+					bill = new Double(person.getVehicle().getTankSize()) * (Double) Config.get("pricePerGallon");
+					Bill.addToLost(bill);
+				} else {
+					joinPump(shortestPump, person);
+				}
 
+			}
 		}
 	}
 

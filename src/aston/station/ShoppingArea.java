@@ -79,4 +79,7 @@ public class ShoppingArea implements Runnable {
 		return this.persons;
 	}
 	
+	public boolean isEmpty() {
+		return (this.persons.size() == 0);
+	}
 }

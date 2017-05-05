@@ -133,6 +133,12 @@ public class Queue {
 	}
 	
 	/**
+	 * Returns if queue is empty
+	 */
+	public boolean isEmpty() {
+		return this.queue.size() == 0;
+	}	
+	/**
 	 * 
 	 */
 	public double occupiedSpaces() {
