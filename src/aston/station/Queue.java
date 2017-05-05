@@ -93,7 +93,7 @@ public class Queue {
 			person.setTimeLeft(timeLeft);
 			if (usingVehicle) {
 				Vehicle vehicle = person.getVehicle();
-					if ((this.queueLevel + vehicle.getQueueSize()) < (Double)Config.get("queueCapacity")) {
+					if ((this.queueLevel + vehicle.getQueueSize()) <= (Double)Config.get("queueCapacity")) {
 						this.queue.put(person);
 						this.queueLevel += vehicle.getQueueSize();
 						if (Config.prettyOutput) { System.out.println(vehicle.toString() + " added to pump"); }
