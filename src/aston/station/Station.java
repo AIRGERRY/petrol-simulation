@@ -54,13 +54,14 @@ public class Station {
 		Person person = createPerson();
 		if (person != null) {
 			if (Config.prettyOutput) { System.out.println(person.getVehicle().toString()+" arrived at station"); }
-			if (ServicerHandler.getInstance().getShortestQueue(person.getVehicle()) == null) {
+			Pump shortestPump = ServicerHandler.getInstance().getShortestQueue(person.getVehicle());
+			if (shortestPump == null) {
 				if (Config.prettyOutput) { System.out.println("No space in any queues, customer turns away"); }
 				Double bill = 0.0;
 				bill = new Double(person.getVehicle().getTankSize()) * (Double) Config.get("pricePerGallon");
 				Bill.addToLost(bill);
 			} else {
-				joinPump(person);
+				joinPump(shortestPump, person);
 			}
 
 		}
@@ -217,8 +218,8 @@ public class Station {
 	 * @param person
 	 *            the person who owns the vehicle
 	 */
-	public void joinPump(Person person) {
-		ServicerHandler.getInstance().getShortestQueue(person.getVehicle()).queue.put(person);
+	public void joinPump(Pump shortestPump, Person person) {
+		shortestPump.queue.put(person);
 	}
 
 	public void tick() {
