@@ -78,7 +78,7 @@ public class ServicerHandler {
 	}
 	
 	/**
-	 * Finds the pump that holds the person being delt with to drop them off the queue.
+	 * Finds the pump that holds the person being dealt with to drop them off the queue.
 	 * @param person
 	 * @return
 	 */
